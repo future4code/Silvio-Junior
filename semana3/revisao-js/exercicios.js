@@ -171,10 +171,28 @@ function retornaContasComSaldoAtualizado(contas) {
 
 // EXERCÍCIO 15A
 function retornaArrayOrdenadoAlfabeticamente(consultas) {
-  
+    function compararNomes(pessoa1,pessoa2){
+        if (pessoa1.nome < pessoa2.nome){
+            return -1
+        } else if (pessoa1.nome > pessoa2.nome) {
+            return 1
+        } else {
+            return 0
+        }
+    }
+    return consultas.sort(compararNomes)
 }
 
 // EXERCÍCIO 15B
 function retornaArrayOrdenadoPorData(consultas) {
-   
+    function compararDatas(pessoa1,pessoa2){
+        if (new Date(pessoa1.dataDaConsulta.split('/').reverse().join('/')) < new Date(pessoa2.dataDaConsulta.split('/').reverse().join('/'))){
+            return -1
+        } else if (new Date(pessoa1.dataDaConsulta.split('/').reverse().join('/')) > new Date(pessoa2.dataDaConsulta.split('/').reverse().join('/'))) {
+            return 1
+        } else {
+            return 0
+        }
+    }
+    return consultas.sort(compararDatas)
 }
