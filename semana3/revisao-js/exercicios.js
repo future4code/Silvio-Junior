@@ -40,7 +40,13 @@ function retornaNumerosPares(array) {
 
 // EXERCÍCIO 05
 function retornaNumerosParesElevadosADois(array) {
- 
+    let arrayDeParesAoQuadrado = []
+    for (i = 0; i< array.length; i++){
+        if (array[i]%2 === 0){
+            arrayDeParesAoQuadrado.push(array[i]**2)
+        }
+    }
+    return arrayDeParesAoQuadrado
 }
 
 // EXERCÍCIO 06
