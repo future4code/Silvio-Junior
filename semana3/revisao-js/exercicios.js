@@ -15,6 +15,16 @@ function retornaArrayInvertido(array) {
 
 // EXERCÍCIO 03
 function retornaArrayOrdenado(array) {
+    for (i = 0; i < array.length; i++){
+        for (j = (i+1); j < array.length; j++){
+            if (array[j] < array[i]){
+                aux = array[j]
+                array[j] = array[i]
+                array[i] = aux
+            }
+        }
+    }
+    return array
 }
 
 // EXERCÍCIO 04
