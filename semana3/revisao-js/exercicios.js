@@ -157,7 +157,16 @@ function retornaPessoasNaoAutorizadas(pessoas) {
 
 // EXERCÍCIO 14
 function retornaContasComSaldoAtualizado(contas) {
-
+    const atualizaContas = (cliente) => {
+        comprasTotal = 0
+        for (let compras of cliente.compras){
+            comprasTotal = comprasTotal + compras
+        }
+        cliente.compras = []
+        cliente.saldoTotal = cliente.saldoTotal - comprasTotal
+        return cliente
+    }
+    return contas.map(atualizaContas)
 }
 
 // EXERCÍCIO 15A
