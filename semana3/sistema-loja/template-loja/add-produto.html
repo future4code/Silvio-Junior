@@ -5,38 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Adicionar Produto</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <div>
-        <p>Loja de Carros do Silvio</p>
+        <p class="boasVindas">Loja de Carros do Silvio</p>
     </div>
     
     <div>
-        <a href="index.html">Página Inicial</a>
-        <a href="ctrl-estoque.html">Controle de Estoque</a>
-        <a href="add-produto.html">Adicionar Produto</a>
-        <a href="funcionarios.html">Funcionários</a>
+        <a class="navegacao" href="index.html">Página Inicial</a>
+        <a class="navegacao" href="ctrl-estoque.html">Controle de Estoque</a>
+        <a class="navegacao" href="add-produto.html">Adicionar Produto</a>
+        <a class="navegacao" href="funcionarios.html">Funcionários</a>
     </div>
 
     
-    <h2>Adicionar Produto</h2>
+    <h2 class="fraseChamativa">Adicionar Produto</h2>
     <form action="">
-        <div>
+        <div class="formulario">
             <label for="link-foto">Link para foto: </label>
             <input type="url" id="link-foto" name="link-foto">
         </div>
         
-        <div>
+        <div class="formulario">
             <label for="descricao">Descrição do produto: </label>
             <input type="text" id="descricao" name="descrição">
         </div>
         
-        <div>
+        <div class="formulario">
             <label for="preco">Preço (em R$): </label>
             <input type="number" min="0" step="0.01" id="preco" name="preço">
         </div>
         
-        <div>
+        <div class="formulario">
             <label for="quantidade"> Quantidade disponível: </label>
             <input type="number" min="0" step="1" id="quantidade" name="quantidade">
         </div>

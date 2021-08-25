@@ -1,0 +1,83 @@
+body {
+    background-image: linear-gradient(white, black);
+}
+
+.navegacao {
+    color: whitesmoke;
+    font-size: 36px;
+    font-family: fantasy;
+    border: 10px outset grey;
+    padding: 0.1% 2.5%;
+    background-color: grey;
+}
+
+.boasVindas {
+    color: darkred;
+    font-size: 500%;
+    font-family: fantasy;
+    font-style: italic;
+    border-bottom: 0;
+    border-top: 0;
+    text-align: center;
+
+}
+
+.fraseChamativa {
+    color: darkred;
+    font-size: 18px;
+    font-family: fantasy;
+    font-style: italic;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.redesSociaisMensagem {
+    color: darkred;
+    font-size: 10px;
+    font-family: fantasy;
+    font-style: italic;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.redesSociaisImagem {
+
+    width: 5%;
+}
+
+.CoontroleDeEstoque {
+    color: darkred;
+    font-size: 28px;
+    font-family: fantasy;
+    font-style: italic;
+    border-top: 0;
+    border-bottom: 0;
+    text-align: center;
+}
+
+.cabecalhotabela {
+    color: darkred;
+    font-size: 20px;
+    block-size: 30%;
+    padding: 1% 15%;
+    text-align: center;
+}
+
+.elementosTabela {
+    color: darkred;
+    font-size: 20px;
+    text-align: center;
+    padding: 1% 15%;
+}
+
+.formulario {
+    color: darkred;
+    font-size: 18px;
+    font-family: fantasy;
+}
+
+.listaFuncionarios {
+    color: darkred;
+    font-size: 18px;
+    font-family: fantasy;
+}
