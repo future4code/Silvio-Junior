@@ -133,6 +133,7 @@ td button {
     border-radius: 5px;
     font-size: 10px;
     color: black;
+    margin: auto;
 }
 
 #back-button:hover {
@@ -148,4 +149,7 @@ td button {
 }
 .botaoComprar:active{
     background-color: #a14203
+}
+.tabelaDeCompras{
+    margin: auto;
 }
