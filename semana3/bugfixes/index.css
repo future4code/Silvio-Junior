@@ -3,7 +3,9 @@
   *  ESTILOS GERAIS 
   *
   **/
-
+html * {
+    font-family: "Roboto";
+}
 * {
     margin: 0;
     padding: 0;
