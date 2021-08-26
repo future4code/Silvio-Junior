@@ -72,14 +72,12 @@ div img {
     padding: 40px;
 }
 
-.blocoMenor {
-    margin-left: auto;
-    margin-right: auto;
-    width: 1px;
-}
 
 #container-de-descricao>ol {
     padding: 15px 0px;
+    display: inline;
+    text-align: center;
+
 }
 
 #container-para-comprar {
@@ -134,4 +132,8 @@ td button {
 
 #back-button:hover {
     background-color: #635a3d
+}
+
+.imagemCompra {
+    max-width: 50px;
 }
