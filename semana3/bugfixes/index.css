@@ -138,3 +138,10 @@ td button {
 .imagemCompra {
     max-width: 50px;
 }
+
+.botaoComprar:hover{
+    background-color: #c44f00
+}
+.botaoComprar:active{
+    background-color: #a14203
+}
