@@ -12,6 +12,18 @@ const MainContainerAddUser = styled.div`
     margin-left: 25vw;
     margin-top: 10vh;
     background-color: ghostwhite;
+
+    @media (max-width: 768px) {
+        height: 40vh;
+        width: 80vw;
+        margin-left: 13vw;
+        margin-right: 10vw;
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 10vh;
+        }
+      }
 `
 
 const Input = styled.input`
@@ -19,6 +31,10 @@ const Input = styled.input`
     border-top: none;
     margin-left: 12px;
     margin-bottom: 2vh;
+
+    @media (max-width: 768px) {
+        margin-left: 4px;
+      }
 `
 
 const BotoesPaginas = styled.button`
@@ -35,6 +51,19 @@ const BotoesPaginas = styled.button`
         :active {
             background-color: lightcoral;
         }
+
+        @media (max-width: 768px) {
+        font-size: 12px;
+        margin-left: 4vw;
+
+      }
+`
+
+const Label = styled.label`
+  
+    :hover{
+      cursor: pointer;
+    }
 `
 
 class AdicionarUsuario extends React.Component {
@@ -44,12 +73,12 @@ class AdicionarUsuario extends React.Component {
                 <h1>Adicionar Novo Usuário</h1>
                 <div>
                     <div>
-                        <label htmlFor='nome'>Nome:</label>
-                        <Input name='nome' placeholder="Nome..." value={this.props.inputNome} onChange={this.props.onChangeInputNome} />
+                        <Label htmlFor='nome'>Nome:</Label>
+                        <Input id='nome' placeholder="Nome..." value={this.props.inputNome} onChange={this.props.onChangeInputNome} />
                     </div>
                     <div>
-                        <label htmlFor='email'>Email:</label>
-                        <Input name='email' placeholder="E-mail..." value={this.props.inputEmail} onChange={this.props.onChangeInputEmail} />
+                        <Label htmlFor='email'>Email:</Label>
+                        <Input id='email' placeholder="E-mail..." value={this.props.inputEmail} onChange={this.props.onChangeInputEmail} />
                         <BotoesPaginas onClick={this.props.createUser} >Enviar</BotoesPaginas>
                     </div>
                 </div>

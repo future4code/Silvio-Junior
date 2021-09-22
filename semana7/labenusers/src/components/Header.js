@@ -8,10 +8,18 @@ const MainContainerHeader = styled.div`
     height: 10vh;
     width: 100vw;
     background-color: blanchedalmond;
+    @media (max-width: 768px) {
+        align-items: flex-end;
+      }
 `
 
 const TituloSite = styled.div`
     font-size: 52px;
+
+    @media (max-width: 768px) {
+        font-size: 26px;
+        margin-bottom: 0;
+      }
 `
 
 const BotoesPaginas = styled.button`
@@ -27,6 +35,12 @@ const BotoesPaginas = styled.button`
         :active {
             background-color: lightcoral;
         }
+
+        @media (max-width: 768px) {
+        font-size: 8px;
+        margin-right: 2vw;
+        margin-bottom: 1vh;
+      }
 `
 
 class Header extends React.Component {
