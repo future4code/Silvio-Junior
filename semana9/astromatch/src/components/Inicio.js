@@ -111,7 +111,7 @@ const ImgCarregar = styled.img`
     animation: ${Heartbeat} 1s linear infinite;
 `
 
-function Inicio (){
+function Inicio (props){
     const aluno = 'silvio'
     const headers = {
         headers: {
@@ -169,11 +169,12 @@ function Inicio (){
 
     useEffect(() => {
         getProfileToChoose()
-    }, [])
+    }, [props.limpar])
 
     return (
         < MainContainer >
-                {(loading === true) ?
+                {profileToChoose ? 
+                ((loading === true) ?
                 (
                 <CardProfile>
                     <ImgCarregar src={Logo} alt="Carregando..." />
@@ -192,7 +193,16 @@ function Inicio (){
                     </ContainerBotoes>
                 </CardProfile>
                 )
-                }
+
+                )
+                :
+                (
+                <CardProfile>
+                    <ImgCarregar src={Logo} alt="Carregando..." />
+                    <h3>Acabaram os perfis...</h3>
+                    <p>Clique em limpar para continuar sua experiência.</p>
+                </CardProfile>
+                )}
         </ MainContainer >
     )
 }

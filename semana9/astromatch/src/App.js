@@ -13,7 +13,7 @@ const MainContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: aliceblue;
-  height: 100vh;
+  min-height: 100vh;
 `
 
 const ContainerBotoes = styled.div`
@@ -51,12 +51,14 @@ function App() {
 }
 
   const [inicio, setInicio]=useState(true)
+  const [limpar,setLimpar]=useState(false)
 
   const clear = () => {
     axios.put(`https://us-central1-missao-newton.cloudfunctions.net/astroMatch/${aluno}/clear`, headers)
     .then((res) => {
         alert(res.data.message)
         setInicio(true)
+        setLimpar(!limpar)
     })
     .catch((err) => {
         console.log(err.response)
@@ -80,7 +82,7 @@ function App() {
         <Button onClick={mudaPaginaLista}>Lista de Matches</Button>
       </ContainerBotoes>
       {(inicio === true) ?
-      (<Inicio />)
+      (<Inicio limpar={limpar} />)
       :
       (<Lista />)}
     </MainContainer>

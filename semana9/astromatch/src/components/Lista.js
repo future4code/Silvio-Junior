@@ -7,13 +7,14 @@ const CardLista = styled.div`
     display: flex;
     flex-direction: column;
     background-color: white;
-    height: 60vh;
+    min-height: 60vh;
     width: 20vw;
     padding-top: 5vh;
     padding-bottom: 5vh;
     padding-right: 3vw;
     padding-left: 3vw;
     margin-top: 5vh;
+    margin-bottom: 2vh;
     border-radius: 60px 20px;
     box-shadow: 10px 5px 5px black;
 
