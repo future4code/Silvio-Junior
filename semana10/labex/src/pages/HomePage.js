@@ -69,8 +69,8 @@ const Button = styled.button`
 function HomePage () {
     let history = useHistory()
 
-    const goToLogin = () => {
-        history.push('/login')
+    const goToAdmin = () => {
+        history.push('/admin')
     }
     
     const goToListTrip = () => {
@@ -89,7 +89,7 @@ function HomePage () {
                 </p>
                 <div>
                     <Button onClick={goToListTrip}>Ver Viagens</Button>
-                    <Button onClick={goToLogin}>Área do Admin</Button>
+                    <Button onClick={goToAdmin}>Área do Admin</Button>
                 </div>
             </SobreNos>
         </MainContainerHome>

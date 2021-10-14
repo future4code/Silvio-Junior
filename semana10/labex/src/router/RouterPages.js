@@ -1,4 +1,5 @@
 import { Switch, Route, BrowserRouter } from "react-router-dom";
+import React, {useState} from "react";
 import HomePage from '../pages/HomePage'
 import TripDetailsPage from '../pages/TripDetailsPage'
 import LoginPage from '../pages/LoginPage'
@@ -6,10 +7,12 @@ import ListTripPage from '../pages/ListTripPage'
 import CreateTripPage from '../pages/CreateTripPage'
 import ApplicationFormPage from '../pages/ApplicationFormPage'
 import AdminHomePage from '../pages/AdminHomePage'
+import ListTripAdminPage from "../pages/ListTripAdminPage";
 import Header from "../components/Header";
 import Footer from '../components/Footer'
 
 function RouterPages () {
+    const [tripDetailId, setTripDetailId] = useState('')
     return(
         <BrowserRouter>
             <Header/>
@@ -20,7 +23,7 @@ function RouterPages () {
                 </Route>
 
                 <Route exact path='/trip_details'>
-                    <TripDetailsPage />
+                    <TripDetailsPage tripDetailId={tripDetailId} />
                 </Route>
 
                 <Route exact path='/login'>
@@ -41,6 +44,10 @@ function RouterPages () {
 
                 <Route exact path='/admin'>
                     <AdminHomePage />
+                </Route>
+
+                <Route exact path='/trips_admin'>
+                    <ListTripAdminPage setTripDetailId={setTripDetailId} />
                 </Route>
 
             </Switch>

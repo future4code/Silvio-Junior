@@ -182,17 +182,22 @@ const ContainerCandidato = styled.div`
     }
 `
 
-function ListTripPage () {
+function ListTripAdminPage (props) {
     const trips = useGetTrips()
     const history = useHistory()
 
-    const goToForm = () => {
-        history.push('/application_form')
+    const goToCreateTrip = () => {
+        history.push('/create_trip')
+    }    
+
+    const goToTripDetails = (id) => {
+        props.setTripDetailId(id)
+        history.push('/trip_details')
     }
 
     const renderizaTrip = trips.map((trip) => {
         return (
-            <CardTrip onClick={goToForm}>
+            <CardTrip onClick={() => goToTripDetails(trip.id)}>
                 <ContainerNome>
                     <h2>{trip.name}</h2>
                 </ContainerNome>
@@ -219,8 +224,8 @@ function ListTripPage () {
         <MainContainerTrips>
             <ContainerSecundario>
                 <ContainerCandidato>
-                    <h3>Quer se candidatar para explorar o universo em uma de nossas viagens espaciais? Clique no card da viagem desejada ou no botão abaixo!</h3>
-                    <button onClick={goToForm}>Candidatar</button>
+                    <h3>Tem uma nova viagem? Clique no botão abaixo para cria-la!</h3>
+                    <button onClick={goToCreateTrip}>Criar Viagem</button>
                 </ContainerCandidato>
                <ContainerFiltros>
                    <h3>Filtrar por</h3>
@@ -238,4 +243,4 @@ function ListTripPage () {
     )
 }
 
-export default ListTripPage
+export default ListTripAdminPage

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Icone from '../img/icone.png'
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 
 const MainContainerLogin = styled.div`
@@ -48,6 +50,7 @@ const ContainerInput = styled.div`
         width: 18vw;
         margin-bottom: 6vh;
         border-radius: 12px;
+        color: lightgray;
     }
 
     button{
@@ -78,6 +81,9 @@ const Mensagem = styled.div`
         color: orange;
         font-size: 12px;
     }
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const IconeLabex = styled.img`
@@ -86,6 +92,42 @@ const IconeLabex = styled.img`
 `
 
 function LoginPage () {
+
+    const [login, setLogin] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
+
+    const onChangeLogin = (event) => {
+        setLogin(event.target.value)
+    }
+
+    const onChangePassword = (event) => {
+        setPassword(event.target.value)
+    }
+
+    const history = useHistory()
+
+    const onClickEnviar = () => {
+
+        const body = {
+            email: login,
+            password: password
+          };
+      
+          axios
+            .post(
+              "https://us-central1-labenu-apis.cloudfunctions.net/labeX/silvio_dias/login",
+              body
+            )
+            .then((response) => {
+                window.localStorage.setItem("token", response.data.token);
+                history.push("/admin");
+            })
+            .catch((error) => {
+                setError(error.response.data.message)
+            });
+    }
+
     return(
         <MainContainerLogin>
             <CardLogin>
@@ -94,12 +136,15 @@ function LoginPage () {
                     <h1>LabeX</h1>
                 </ContainerMarca>
                 <Mensagem>
-                    <p>Insira seu e-mail e a senha cadastrada para acessar a área dos administradores.</p>
+                    {error === "" ?
+                    (<p>Insira seu e-mail e a senha cadastrada para acessar a área dos administradores.</p>)
+                    :
+                    (<p>{error}</p>)}
                 </Mensagem>
                 <ContainerInput>
-                    <input placeholder="E-mail" />
-                    <input placeholder="Senha" />
-                    <button>Entrar</button>
+                    <input value={login} onChange={onChangeLogin} type="email" placeholder="E-mail" />
+                    <input value={password} onChange={onChangePassword} type='password' placeholder="Senha" />
+                    <button onClick={onClickEnviar}>Entrar</button>
                 </ContainerInput>
             </CardLogin>
         </MainContainerLogin>

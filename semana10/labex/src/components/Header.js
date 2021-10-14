@@ -59,8 +59,8 @@ const IconeLabex = styled.img`
 function Header () {
     let history = useHistory()
 
-    const goToLogin = () => {
-        history.push('/login')
+    const goToAdmin = () => {
+        history.push('/admin')
     }
     const goToHome = () => {
         history.push('/')
@@ -79,7 +79,7 @@ function Header () {
             <ContainerNav>
                 <Button onClick={goToHome}>Home</Button>
                 <Button onClick={goToListTrip}>Trips</Button>
-                <Button onClick={goToLogin}> Admin</Button>
+                <Button onClick={goToAdmin}> Admin</Button>
             </ContainerNav>
         </MainContainerHeader>
     )
