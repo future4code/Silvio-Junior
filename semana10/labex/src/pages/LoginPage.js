@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Icone from '../img/icone.png'
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { Loading } from '../components/Loading';
 
 
 const MainContainerLogin = styled.div`
@@ -37,7 +38,7 @@ const ContainerMarca = styled.div`
     }
 `
 
-const ContainerInput = styled.div`
+const ContainerInput = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -96,6 +97,7 @@ function LoginPage () {
     const [login, setLogin] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const[loading, setLoading] = useState(false)
 
     const onChangeLogin = (event) => {
         setLogin(event.target.value)
@@ -107,13 +109,15 @@ function LoginPage () {
 
     const history = useHistory()
 
-    const onClickEnviar = () => {
+    const onClickEnviar = (event) => {
+        event.preventDefault()
 
         const body = {
             email: login,
             password: password
           };
-      
+
+          setLoading(true)
           axios
             .post(
               "https://us-central1-labenu-apis.cloudfunctions.net/labeX/silvio_dias/login",
@@ -122,9 +126,11 @@ function LoginPage () {
             .then((response) => {
                 window.localStorage.setItem("token", response.data.token);
                 history.push("/admin");
+                setLoading(false)
             })
             .catch((error) => {
                 setError(error.response.data.message)
+                setLoading(false)
             });
     }
 
@@ -135,17 +141,24 @@ function LoginPage () {
                     <IconeLabex src={Icone} alt="Icone LabeX" />
                     <h1>LabeX</h1>
                 </ContainerMarca>
-                <Mensagem>
-                    {error === "" ?
-                    (<p>Insira seu e-mail e a senha cadastrada para acessar a área dos administradores.</p>)
-                    :
-                    (<p>{error}</p>)}
-                </Mensagem>
-                <ContainerInput>
-                    <input value={login} onChange={onChangeLogin} type="email" placeholder="E-mail" />
-                    <input value={password} onChange={onChangePassword} type='password' placeholder="Senha" />
-                    <button onClick={onClickEnviar}>Entrar</button>
-                </ContainerInput>
+                {(loading === true) ?
+                (<Loading/>)
+                :
+                (
+                    <div>
+                        <Mensagem>
+                            {error === "" ?
+                            (<p>Insira seu e-mail e a senha cadastrada para acessar a área dos administradores.</p>)
+                            :
+                            (<p>{error}</p>)}
+                        </Mensagem>
+                        <ContainerInput onSubmit={onClickEnviar}>
+                            <input value={login} onChange={onChangeLogin} type="email" placeholder="E-mail" required />
+                            <input value={password} onChange={onChangePassword} type='password' placeholder="Senha" required />
+                            <button>Entrar</button>
+                        </ContainerInput>
+                    </div>
+                )}
             </CardLogin>
         </MainContainerLogin>
     )

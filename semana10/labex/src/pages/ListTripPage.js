@@ -6,6 +6,8 @@ import calendario from '../img/icone_calendario.png'
 import relogio from '../img/icone_relogio.png'
 import planeta from '../img/icone_planeta.png'
 import { useHistory } from 'react-router-dom';
+import {useForm} from '../hooks/useForm'
+import { Loading } from '../components/Loading';
 
 const MainContainerTrips = styled.div`
     min-height: 100vh;
@@ -106,56 +108,14 @@ const ContainerRelogio = styled.div`
 const ContainerSecundario = styled.div`
     display: flex;
 `
-const ContainerFiltros =styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 40vw;
 
-    h3{
-        color: orange;
-    }
-
-    input {
-        background-color: #111111;
-        border: none;
-        height: 4vh;
-        width: 18vw;
-        margin-bottom: 2vh;
-        border-radius: 12px;
-        color: lightgray;
-    }
-
-    button{
-        background-color: orange;
-        border-color: orange;
-        height: 4vh;
-        width: 18vw;
-        border-radius: 12px;
-
-        :hover {
-            cursor: pointer;
-            background-color: darkorange;
-            border-color: darkorange;
-        }
-
-        :active {
-            cursor: pointer;
-            background-color: gold;
-            border-color: gold;
-        }
-    }
-`
 
 const ContainerCandidato = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 40vw;
-    margin-left: 2vw;
-    margin-right: 5vw;
+    width: 80vw;
 
     h3{
         color: orange;
@@ -183,7 +143,8 @@ const ContainerCandidato = styled.div`
 `
 
 function ListTripPage () {
-    const trips = useGetTrips()
+    const constante = ''
+    const [trips,loadingTrips] = useGetTrips(constante)
     const history = useHistory()
 
     const goToForm = () => {
@@ -222,18 +183,11 @@ function ListTripPage () {
                     <h3>Quer se candidatar para explorar o universo em uma de nossas viagens espaciais? Clique no card da viagem desejada ou no botão abaixo!</h3>
                     <button onClick={goToForm}>Candidatar</button>
                 </ContainerCandidato>
-               <ContainerFiltros>
-                   <h3>Filtrar por</h3>
-                   <input placeholder="Nome" />
-                   <input placeholder="Planeta" />
-                   <div>
-                       <input placeholder="Duração Mínima"/>
-                       <input placeholder="Duração Máxima"/>
-                   </div>
-                   <button>Filtrar</button>
-               </ContainerFiltros>
             </ContainerSecundario>
-            {renderizaTrip}
+            {(loadingTrips === true)?
+            (<Loading/>)
+            :
+            (renderizaTrip)}
         </MainContainerTrips>
     )
 }

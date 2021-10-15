@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useGetTripDetail } from '../hooks/useGetTripDetail';
 import styled from 'styled-components';
 import calendario from '../img/icone_calendario.png'
 import relogio from '../img/icone_relogio.png'
 import planeta from '../img/icone_planeta.png'
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useProtectedPage } from '../hooks/useProtectedPage';
+import { Loading } from '../components/Loading';
 
 const MainContainerDetail = styled.div`
     min-height: 100vh;
@@ -157,23 +160,39 @@ const ContainerTexto = styled.div`
 `
 
 
-function TripDetailsPage (props) {
-    const trip = useGetTripDetail(props.tripDetailId)
-    const candidatos = trip.candidates
+function TripDetailsPage () {
+    useProtectedPage()
+    const pathParams = useParams()
+    const [trip, setTrip] = useState([])
+    const [atualizarAprovado, setAtualizarAprovado] = useState(true)
+    const [loading, setLoading] = useState(false)
 
-    console.log(candidatos)
+    useEffect (() => {
+        console.log('entrei!')
+        const headers = {
+            headers:{
+                auth: window.localStorage.getItem('token')
+            }
+        }
 
-    const candidatosEmEspera = candidatos.filter((candidato) => {
-        return (!candidato.approve)
-    })
+        setLoading(true)
 
-    const candidatosAprovados = candidatos.filter((candidato) => {
-        return(candidato.approve === true)
-    })
+        axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/silvio_dias/trip/${pathParams.trip_id}`, headers)
+        .then((res) => {
+            setTrip(res.data.trip)
+            setLoading(false)
+        })
+        .catch((err) => {
+            alert(err.response)
+            setLoading(false)
+        })
+    }, [atualizarAprovado])
 
-    console.log(candidatosAprovados)
 
-    const aprovarCandidato = (id) => {
+    let candidatosEmEspera = trip.candidates
+    let candidatosAprovados = trip.approved
+
+    let aprovarCandidato = (id) => {
         const headers = {
             headers:{
                 'Content-Type': 'application/json',
@@ -186,87 +205,100 @@ function TripDetailsPage (props) {
         }
 
         if (window.confirm("Deseja aprovar o candidato?")){
-            axios.put(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/silvio_dias/trips/${props.tripDetailId}/candidates/${id}/decide`, body, headers)
+
+            setLoading(true)
+            axios.put(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/silvio_dias/trips/${pathParams.trip_id}/candidates/${id}/decide`, body, headers)
             .then((res) => {
-                console.log(res.data)
+                alert('Candidato Aprovado!')
+                setAtualizarAprovado(!atualizarAprovado)
+                setLoading(false)
             })
             .catch(err =>{
-                console.log(err.response.data)
+                alert(err.response.data)
+                setLoading(false)
             })
         }
 
     }
 
-    const renderizaCandidatosAprovados = candidatosAprovados.map((candidato) => {
-        return(
-            <ContainerCandidato>
-                <ContainerNome>
-                    {candidato.name}, {candidato.age}
-                    </ContainerNome>
-                <ContainerProfisao>
-                    Profissão: {candidato.profession}
-                </ContainerProfisao>
-                <ContainerPais>
-                    País: {candidato.country}
-                </ContainerPais>
-                <ContainerTexto>
-                    {candidato.applicationText}
-                </ContainerTexto>
-            </ContainerCandidato>
-        )
-    })
-
-
-    const renderizaCandidatosEmEspera = candidatosEmEspera.map((candidato) => {
-        return(
-            <ContainerCandidato onClick={() => aprovarCandidato(candidato.id)}>
-                <ContainerNome>
-                    {candidato.name}, {candidato.age}
-                    </ContainerNome>
-                <ContainerProfisao>
-                    Profissão: {candidato.profession}
-                </ContainerProfisao>
-                <ContainerPais>
-                    País: {candidato.country}
-                </ContainerPais>
-                <ContainerTexto>
-                    {candidato.applicationText}
-                </ContainerTexto>
-            </ContainerCandidato>
-        )
-    })
+    console.log(candidatosAprovados)
     
     return(
         <MainContainerDetail>
-            <h1>{trip.name}</h1>
-            <ContainerSecundario>
-                <ContainerDetalhes>
-                    <h2>Detalhes</h2>
-                    <ContainerDescricao>
-                        <b>{trip.description}</b>
-                    </ContainerDescricao>
-                    <ContainerPlaneta>
-                        <Planeta src={planeta} alt="Logo Planeta" />
-                        {trip.planet}
-                    </ContainerPlaneta>
-                    <ContainerCalendario>
-                        <Calendario src={calendario} alt="logo calendário" />
-                        {trip.date} 
-                    </ContainerCalendario>
-                    <ContainerRelogio>
-                        <Relogio src={relogio} alt="logo relógio" />
-                        {trip.durationInDays} dias
-                    </ContainerRelogio>
-                </ContainerDetalhes>
-                <ContainerCandidatos>
-                    <h2>Candidatos</h2>
-                    <h4>Em Espera</h4>
-                    <p><b>Clique no candidato para aprova-lo.</b></p>
-                    {candidatosEmEspera && renderizaCandidatosEmEspera}
-                    <h4>Aprovados</h4>
-                    {candidatosAprovados && renderizaCandidatosAprovados}
-                </ContainerCandidatos>
-            </ContainerSecundario>
+            {(loading === true) ?
+                (<Loading/>)
+                :
+                (
+            <div>
+                        <h1>{trip.name}</h1>
+                        <ContainerSecundario>
+                            <ContainerDetalhes>
+                                <h2>Detalhes</h2>
+                                <ContainerDescricao>
+                                    <b>{trip.description}</b>
+                                </ContainerDescricao>
+                                <ContainerPlaneta>
+                                    <Planeta src={planeta} alt="Logo Planeta" />
+                                    {trip.planet}
+                                </ContainerPlaneta>
+                                <ContainerCalendario>
+                                    <Calendario src={calendario} alt="logo calendário" />
+                                    {trip.date} 
+                                </ContainerCalendario>
+                                <ContainerRelogio>
+                                    <Relogio src={relogio} alt="logo relógio" />
+                                    {trip.durationInDays} dias
+                                </ContainerRelogio>
+                            </ContainerDetalhes>
+                    
+                            <ContainerCandidatos>
+                                <h2>Candidatos</h2>
+                                <h4>Em Espera</h4>
+                                {(candidatosEmEspera && candidatosEmEspera.length > 0) ?
+                                (<p><b>Clique no candidato para aprova-lo.</b></p>)
+                                :
+                                (<p><b>Ainda não temos candidaturas para essa viagem.</b></p>)}
+                                {candidatosEmEspera && (candidatosEmEspera.map((candidato) => (
+                                <ContainerCandidato onClick={() => aprovarCandidato(candidato.id)}>
+                                    <ContainerNome>
+                                        {candidato.name}, {candidato.age}
+                                        </ContainerNome>
+                                    <ContainerProfisao>
+                                        Profissão: {candidato.profession}
+                                    </ContainerProfisao>
+                                    <ContainerPais>
+                                        País: {candidato.country}
+                                    </ContainerPais>
+                                    <ContainerTexto>
+                                        {candidato.applicationText}
+                                    </ContainerTexto>
+                                </ContainerCandidato>
+                                )))}
+                                <h4>Aprovados</h4>
+                                {(candidatosAprovados && candidatosAprovados.length > 0) ?
+                                (candidatosAprovados.map((candidato) => (
+                                <ContainerCandidato>
+                                    <ContainerNome>
+                                        {candidato.name}, {candidato.age}
+                                        </ContainerNome>
+                                    <ContainerProfisao>
+                                        Profissão: {candidato.profession}
+                                    </ContainerProfisao>
+                                    <ContainerPais>
+                                        País: {candidato.country}
+                                    </ContainerPais>
+                                    <ContainerTexto>
+                                        {candidato.applicationText}
+                                    </ContainerTexto>
+                                </ContainerCandidato>
+                                )))
+                                :
+                                (<p><b>Nenhum candidato foi aprovado!</b></p>)}
+                            </ContainerCandidatos>
+                    
+                        </ContainerSecundario>
+            </div>
+            )}
         </MainContainerDetail>
     )
 }

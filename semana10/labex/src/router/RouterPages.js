@@ -12,7 +12,6 @@ import Header from "../components/Header";
 import Footer from '../components/Footer'
 
 function RouterPages () {
-    const [tripDetailId, setTripDetailId] = useState('')
     return(
         <BrowserRouter>
             <Header/>
@@ -22,8 +21,8 @@ function RouterPages () {
                     <HomePage />
                 </Route>
 
-                <Route exact path='/trip_details'>
-                    <TripDetailsPage tripDetailId={tripDetailId} />
+                <Route exact path='/trip_details/:trip_id'>
+                    <TripDetailsPage />
                 </Route>
 
                 <Route exact path='/login'>
@@ -47,7 +46,7 @@ function RouterPages () {
                 </Route>
 
                 <Route exact path='/trips_admin'>
-                    <ListTripAdminPage setTripDetailId={setTripDetailId} />
+                    <ListTripAdminPage />
                 </Route>
 
             </Switch>

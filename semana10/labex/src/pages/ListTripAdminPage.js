@@ -6,6 +6,10 @@ import calendario from '../img/icone_calendario.png'
 import relogio from '../img/icone_relogio.png'
 import planeta from '../img/icone_planeta.png'
 import { useHistory } from 'react-router-dom';
+import { useProtectedPage } from '../hooks/useProtectedPage';
+import { Loading } from '../components/Loading';
+
+
 
 const MainContainerTrips = styled.div`
     min-height: 100vh;
@@ -52,9 +56,15 @@ const Calendario = styled.img`
 
 const ContainerNome = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 12vh;
+
+    h2{
+        text-align: center;
+        padding-top: 2vh;
+    }
 `
 
 const ContainerDescricao = styled.div`
@@ -106,56 +116,13 @@ const ContainerRelogio = styled.div`
 const ContainerSecundario = styled.div`
     display: flex;
 `
-const ContainerFiltros =styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 40vw;
-
-    h3{
-        color: orange;
-    }
-
-    input {
-        background-color: #111111;
-        border: none;
-        height: 4vh;
-        width: 18vw;
-        margin-bottom: 2vh;
-        border-radius: 12px;
-        color: lightgray;
-    }
-
-    button{
-        background-color: orange;
-        border-color: orange;
-        height: 4vh;
-        width: 18vw;
-        border-radius: 12px;
-
-        :hover {
-            cursor: pointer;
-            background-color: darkorange;
-            border-color: darkorange;
-        }
-
-        :active {
-            cursor: pointer;
-            background-color: gold;
-            border-color: gold;
-        }
-    }
-`
 
 const ContainerCandidato = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 40vw;
-    margin-left: 2vw;
-    margin-right: 5vw;
+    width: 80vw;
 
     h3{
         color: orange;
@@ -182,42 +149,105 @@ const ContainerCandidato = styled.div`
     }
 `
 
-function ListTripAdminPage (props) {
-    const trips = useGetTrips()
-    const history = useHistory()
+const CardButton = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    const goToCreateTrip = () => {
+    button{
+        background-color: orange;
+        border-color: orange;
+        height: 4vh;
+        width: 18vw;
+        margin-bottom: -4vh;
+        border-radius: 12px;
+        margin-top: 4vh;
+        z-index: 0;
+
+        :hover {
+            cursor: pointer;
+            background-color: darkorange;
+            border-color: darkorange;
+        }
+
+        :active {
+            cursor: pointer;
+            background-color: gold;
+            border-color: gold;
+        }
+    }
+`
+
+function ListTripAdminPage () {
+    useProtectedPage()
+    const [flagDelete, setFlagDelete] = useState(false)
+    const [loading, setLoading] = useState(false)
+    let [trips,loadingTrips] = useGetTrips(flagDelete)
+
+
+    let history = useHistory()
+
+
+    let goToCreateTrip = () => {
         history.push('/create_trip')
     }    
 
-    const goToTripDetails = (id) => {
-        props.setTripDetailId(id)
-        history.push('/trip_details')
+    let goToTripDetails = (id) => {
+        history.push(`/trip_details/${id}`)
+    }
+
+   
+
+    let deleteTrip = (id) => {
+        if (window.confirm('Você deseja deletar a viagem?')){
+            const headers = {
+                headers:{
+                    'Content-Type': 'application/json',
+                    auth: window.localStorage.getItem('token')
+                }
+            }
+            setLoading(true)
+
+            axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/silvio_dias/trips/${id}`, headers)
+            .then((res) => {
+                alert('Viagem deletada com sucesso!')
+                setFlagDelete(!flagDelete)
+                setLoading(false)
+            })
+            .catch((err) => {
+                alert(`Algo deu errado... ${err.response.data}`)
+                setLoading(false)
+            })
+        }
     }
 
     const renderizaTrip = trips.map((trip) => {
         return (
-            <CardTrip onClick={() => goToTripDetails(trip.id)}>
-                <ContainerNome>
-                    <h2>{trip.name}</h2>
-                </ContainerNome>
-                <ContainerDescricao>
-                    <b>{trip.description}</b>
-                </ContainerDescricao>
-                <ContainerPlaneta>
-                    <Planeta src={planeta} alt="Logo Planeta" />
-                    {trip.planet}
-                </ContainerPlaneta>
-                <ContainerCalendario>
-                    <Calendario src={calendario} alt="logo calendário" />
-                    {trip.date} 
-                </ContainerCalendario>
-                <ContainerRelogio>
-                    <Relogio src={relogio} alt="logo relógio" />
-                    {trip.durationInDays} dias
-                    
-                </ContainerRelogio>
-            </CardTrip>
+            <CardButton>
+                <button onClick={() => deleteTrip(trip.id)}>Deletar Viagem</button>
+                <CardTrip onClick={() => goToTripDetails(trip.id)}>
+                    <ContainerNome>
+                        <h2>{trip.name}</h2>
+                    </ContainerNome>
+                    <ContainerDescricao>
+                        <b>{trip.description}</b>
+                    </ContainerDescricao>
+                    <ContainerPlaneta>
+                        <Planeta src={planeta} alt="Logo Planeta" />
+                        {trip.planet}
+                    </ContainerPlaneta>
+                    <ContainerCalendario>
+                        <Calendario src={calendario} alt="logo calendário" />
+                        {trip.date} 
+                    </ContainerCalendario>
+                    <ContainerRelogio>
+                        <Relogio src={relogio} alt="logo relógio" />
+                        {trip.durationInDays} dias
+                        
+                    </ContainerRelogio>
+                </CardTrip>
+            </CardButton>
         )
     })
     return(
@@ -227,18 +257,11 @@ function ListTripAdminPage (props) {
                     <h3>Tem uma nova viagem? Clique no botão abaixo para cria-la!</h3>
                     <button onClick={goToCreateTrip}>Criar Viagem</button>
                 </ContainerCandidato>
-               <ContainerFiltros>
-                   <h3>Filtrar por</h3>
-                   <input placeholder="Nome" />
-                   <input placeholder="Planeta" />
-                   <div>
-                       <input placeholder="Duração Mínima"/>
-                       <input placeholder="Duração Máxima"/>
-                   </div>
-                   <button>Filtrar</button>
-               </ContainerFiltros>
             </ContainerSecundario>
-            {renderizaTrip}
+            {((loading === true) || (loadingTrips === true)) ? 
+            (<Loading/>)
+            :
+            (renderizaTrip)}
         </MainContainerTrips>
     )
 }

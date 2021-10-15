@@ -3,21 +3,23 @@ import axios from 'axios'
 
 export const useGetTripDetail = (id) => {
     const [trip, setTrip] = useState([])
+    
+    const headers = {
+        headers:{
+            auth: window.localStorage.getItem('token')
+        }
+    }
 
     useEffect (() => {
-
-        const headers = {
-            headers:{
-
-                auth: window.localStorage.getItem('token')
-            }
-        }
+        console.log("oi")
 
         axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/silvio_dias/trip/${id}`,headers)
         .then((res) => {
+            console.log(res.data)
             setTrip(res.data.trip)
         })
         .catch((err) => {
+            console.log(err)
             alert(err.response.data)
         })
     }, [])
