@@ -4,7 +4,7 @@ import Logo from '../img/icone.png'
 import GifLoading from '../img/gifLoading.gif'
 
 const MainContainerLoading = styled.div`
-    height: 100vh;
+    height: 70vh;
     background-image: radial-gradient(#000000,#111111);
     display: flex;
     justify-content: center;
@@ -16,7 +16,7 @@ const MainContainerLoading = styled.div`
 
 const CardLoad = styled.div`
     height: 75vh;
-    width: 30vw;
+    width: 80vw;
     margin-bottom: 10vh;
     background-color: black;
     display: flex;
@@ -24,10 +24,6 @@ const CardLoad = styled.div`
     justify-content: space-around;
     align-items: center;
     align-self: center;
-
-    @media(max-width:800px){
-        width: 80vw;
-    }
 `
 
 const LogoLabex = styled.img`
@@ -45,7 +41,7 @@ const Gif = styled.img`
     height:60vh;
     width: auto;
     @media(max-width:800px){
-        height: 40vh;
+        height: 35vh;
         width: auto;
     }
 `

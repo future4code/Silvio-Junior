@@ -7,7 +7,7 @@ import relogio from '../img/icone_relogio.png'
 import planeta from '../img/icone_planeta.png'
 import { useHistory } from 'react-router-dom';
 import { useProtectedPage } from '../hooks/useProtectedPage';
-import { Loading } from '../components/Loading';
+import { Loading } from '../components/Loading2';
 
 
 
@@ -36,6 +36,11 @@ const CardTrip = styled.div`
     :hover{
         box-shadow: 2px 2px 25px lightgray;
         cursor: pointer;
+    }
+
+    @media(max-width:800px){
+        width: 80vw;
+        margin-left: 4vw;
     }
 `
 
@@ -73,6 +78,9 @@ const ContainerDescricao = styled.div`
     align-items: center;
     height: 20vh;
     width: 19vw;
+    @media(max-width:800px){
+        width: 70vw;
+    }
 
 `
 
@@ -126,6 +134,9 @@ const ContainerCandidato = styled.div`
 
     h3{
         color: orange;
+        @media(max-width:800px){
+            font-size: 18px;
+        }
     }
 
     button{
@@ -134,6 +145,12 @@ const ContainerCandidato = styled.div`
         height: 4vh;
         width: 18vw;
         border-radius: 12px;
+
+        @media(max-width:800px){
+            width: 40vw;
+            margin-left: 4vw;
+        }
+
 
         :hover {
             cursor: pointer;
@@ -164,6 +181,10 @@ const CardButton = styled.div`
         border-radius: 12px;
         margin-top: 4vh;
         z-index: 0;
+        @media(max-width:800px){
+            width: 40vw;
+        }
+
 
         :hover {
             cursor: pointer;

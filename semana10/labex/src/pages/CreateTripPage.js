@@ -15,6 +15,9 @@ const MainContainerForm = styled.div`
     align-items: center;
     margin-top: 0;
     padding-top: 0;
+    @media(max-width:800px){
+            height: 150vh;
+    }
 `
 
 const CardForm = styled.div`
@@ -22,10 +25,19 @@ const CardForm = styled.div`
     height: 78vh;
     width: 60vw;
     padding-top: 0;
+    @media(max-width:800px){
+        width: 80vw;
+        height: 120vh;
+    }
+
 `
 
 const Form = styled.form`
     display: flex;
+    @media(max-width:800px){
+        flex-direction: column;
+    }
+
 `
 
 const ContainerEsquerdo = styled.div`
@@ -45,6 +57,10 @@ const ContainerEsquerdo = styled.div`
         margin-bottom: 3vh;
         border-radius: 12px;
         color: lightgray;
+        @media(max-width:800px){
+            width: 40vw;
+        }
+
     }
 
     button{
@@ -54,6 +70,10 @@ const ContainerEsquerdo = styled.div`
         width: 18vw;
         margin-bottom: 4vh;
         border-radius: 12px;
+
+        @media(max-width:800px){
+            width: 40vw;
+        }
 
         :hover {
             cursor: pointer;
@@ -77,6 +97,9 @@ const ContainerDireito = styled.div`
     align-self: flex-start;
     margin-left: 4vw;
     margin-top: 10vh;
+    @media(max-width:800px){
+        margin-left: 18vw;
+    }
     
     input {
         background-color: #111111;
@@ -86,6 +109,9 @@ const ContainerDireito = styled.div`
         margin-bottom: 6vh;
         border-radius: 12px;
         color: lightgray;
+        @media(max-width:800px){
+            width: 40vw;
+        }
     }
 
     button{
@@ -95,6 +121,10 @@ const ContainerDireito = styled.div`
         width: 18vw;
         margin-bottom: 4vh;
         border-radius: 12px;
+
+        @media(max-width:800px){
+            width: 40vw;
+        }
 
         :hover {
             cursor: pointer;

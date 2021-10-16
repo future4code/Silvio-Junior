@@ -14,6 +14,9 @@ const MainContainerForm = styled.div`
     align-items: center;
     margin-top: 0;
     padding-top: 0;
+    @media(max-width:800px){
+            height: 180vh;
+    }
 `
 
 const CardForm = styled.div`
@@ -21,6 +24,12 @@ const CardForm = styled.div`
     height: 78vh;
     width: 60vw;
     padding-top: 0;
+
+    @media(max-width:800px){
+        width: 80vw;
+        height: 150vh;
+    }
+
 `
 
 const DivInfos = styled.div`
@@ -40,6 +49,10 @@ const DivInfos = styled.div`
         margin-bottom: 3vh;
         border-radius: 12px;
         color: lightgray;
+        @media(max-width:800px){
+            width: 40vw;
+        }
+
     }
 
     select{
@@ -50,6 +63,9 @@ const DivInfos = styled.div`
         margin-bottom: 3vh;
         border-radius: 12px;
         color: lightgray;
+        @media(max-width:800px){
+            width: 40vw;
+        }
     }
 
     button{
@@ -59,6 +75,9 @@ const DivInfos = styled.div`
         width: 18vw;
         margin-bottom: 4vh;
         border-radius: 12px;
+        @media(max-width:800px){
+            width: 40vw;
+        }
 
         :hover {
             cursor: pointer;
@@ -75,6 +94,9 @@ const DivInfos = styled.div`
 `
 const DivSecundaria = styled.form`
     display: flex;
+    @media(max-width:800px){
+        flex-direction: column;
+    }
 `
 const DivMensagemEnvar = styled.div`
     display: flex;
@@ -83,6 +105,9 @@ const DivMensagemEnvar = styled.div`
     justify-content: center;
     align-self: flex-start;
     margin-left: 4vw;
+    @media(max-width:800px){
+        margin-left: 2vw;
+    }
 
     h4{
         color: orange;
@@ -95,6 +120,9 @@ const DivMensagemEnvar = styled.div`
         margin-bottom: 6vh;
         border-radius: 12px;
         color: lightgray;
+        @media(max-width:800px){
+            width: 40vw;
+        }
     }
 
     button{
@@ -104,6 +132,9 @@ const DivMensagemEnvar = styled.div`
         width: 18vw;
         margin-bottom: 4vh;
         border-radius: 12px;
+        @media(max-width:800px){
+            width: 40vw;
+        }
 
         :hover {
             cursor: pointer;
@@ -209,8 +240,9 @@ function ApplicationFormPage () {
         })
 
     }
+    const constante = ''
 
-    const trips = useGetTrips()
+    const [trips, loadingTrips] = useGetTrips(constante)
 
     const options = trips.map((trip) => {
         return(
@@ -224,7 +256,7 @@ function ApplicationFormPage () {
                     <IconeLabex src={Icone} alt="Icone LabeX" />
                     <h1>LabeX</h1>
                 </ContainerMarca>
-                {(loading == true) ?
+                {((loading == true) || (loadingTrips === true))?
                 (<Loading />)
                 :
                 (

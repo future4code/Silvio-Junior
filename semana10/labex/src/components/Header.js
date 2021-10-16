@@ -18,6 +18,10 @@ const ContainerMarca = styled.div`
 
     h1{
         color: orange;
+
+        @media (max-width: 800px){
+            display: none;
+        }
     }
 `
 
@@ -54,6 +58,10 @@ const Button = styled.button`
 const IconeLabex = styled.img`
     height: 40px;
     width: auto;
+
+    @media(max-width:800px){
+        margin-top: 2vh;
+    }
 `
 
 function Header () {

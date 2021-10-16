@@ -20,6 +20,10 @@ const MainContainerDetail = styled.div`
     
     h1{ 
         color: orange;
+        @media(max-width:800px){
+            align-self: center;
+            text-align: center;
+        }
     }
 `
 
@@ -34,6 +38,12 @@ const ContainerDetalhes = styled.div`
 
     h2{
         color: orange;
+    }
+
+    @media(max-width:800px){
+        width: 80vw;
+        height: 50vh;
+        align-self: center;
     }
 `
 
@@ -63,6 +73,9 @@ const ContainerCandidatos = styled.div`
 
 const ContainerSecundario = styled.div`
     display: flex;
+    @media(max-width:800px){
+        flex-direction: column;
+    }
 `
 
 const ContainerPlaneta = styled.div`
@@ -122,7 +135,9 @@ const ContainerDescricao = styled.div`
     align-items: center;
     height: 20vh;
     width: 19vw;
-
+    @media(max-width:800px){
+        width: 70vw;
+    }
 `
 
 const ContainerCandidato = styled.div`
@@ -138,6 +153,10 @@ const ContainerCandidato = styled.div`
     :hover{
         box-shadow: 2px 2px 25px lightgray;
         cursor: pointer;
+    }
+
+    @media(max-width:800px){
+        width: 80vw;
     }
 `
 

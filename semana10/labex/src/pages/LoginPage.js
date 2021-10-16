@@ -23,6 +23,10 @@ const CardLogin = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+
+    @media(max-width:800px){
+        width: 80vw;
+    }
 `
 
 const ContainerMarca = styled.div`
@@ -52,6 +56,9 @@ const ContainerInput = styled.form`
         margin-bottom: 6vh;
         border-radius: 12px;
         color: lightgray;
+        @media(max-width:800px){
+            width: 70vw;
+        }
     }
 
     button{
@@ -61,6 +68,9 @@ const ContainerInput = styled.form`
         width: 18vw;
         margin-bottom: 4vh;
         border-radius: 12px;
+        @media(max-width:800px){
+            width: 70vw;
+        }
 
         :hover {
             cursor: pointer;
@@ -85,6 +95,10 @@ const Mensagem = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media(max-width:800px){
+            width: 70vw;
+    }
 `
 
 const IconeLabex = styled.img`
@@ -137,15 +151,15 @@ function LoginPage () {
     return(
         <MainContainerLogin>
             <CardLogin>
-                <ContainerMarca>
-                    <IconeLabex src={Icone} alt="Icone LabeX" />
-                    <h1>LabeX</h1>
-                </ContainerMarca>
-                {(loading === true) ?
+            {(loading === true) ?
                 (<Loading/>)
                 :
                 (
                     <div>
+                        <ContainerMarca>
+                            <IconeLabex src={Icone} alt="Icone LabeX" />
+                            <h1>LabeX</h1>
+                        </ContainerMarca>
                         <Mensagem>
                             {error === "" ?
                             (<p>Insira seu e-mail e a senha cadastrada para acessar a área dos administradores.</p>)

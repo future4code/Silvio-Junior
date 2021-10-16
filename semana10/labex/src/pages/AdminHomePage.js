@@ -18,6 +18,11 @@ const MainContainerHome = styled.div`
     background-size: 140vw;
     background-position-x: -40vw;
     background-position-y: -100vh;
+    @media(max-width:800px){
+        background-size: 100vh;
+        background-position-x: -60vw;
+        background-position-y: 0;
+    }
 `
 
 const SobreNos = styled.div`
@@ -35,12 +40,26 @@ const SobreNos = styled.div`
 
     h2{
         color: orange;
+        @media(max-width:800px){
+            font-size: 14px;
+        }
     }
 
     p{
         color: orange;
         width: 20vw;
         text-align: center;
+        @media(max-width:800px){
+            font-size: 10px;
+            width: 60vw;
+        }
+    }
+
+    @media(max-width:800px){
+        height: 45vh;
+        width: 70vw;
+        margin-top: -50vh;
+        justify-content: center;
     }
 `
 
@@ -64,6 +83,10 @@ const Button = styled.button`
         border-bottom: 1px solid darkorange ;
         color: black;
     }
+    @media(max-width:800px){
+            font-size: 8px;
+            margin-top: 0;
+        }
 `
 
 function AdminHomePage () {
