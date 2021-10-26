@@ -5,6 +5,8 @@ import logo from '../img/logo.png'
 import axios from "axios";
 import { BASE_URL } from "../constants/urls";
 import Card from "../components/Card";
+import { useForm } from "../hooks/useForm";
+import { useHistory } from "react-router-dom";
 
 const MainContainerHome = styled.div`
     min-height: 80vh;
@@ -64,24 +66,13 @@ const FiltrosButton = styled.button`
     }
 `
 
-const PubliContainer = styled.div`
+const PubliContainer = styled.form`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 4vh;
    
-
-    input {
-        height: 20vw;
-        width: 60vw;
-        border: none;
-        margin-bottom: 2vh;
-        border-radius: 8px;
-        background-color: #111111;
-        color: ghostwhite;
-    }
-
     button{
         height: 4vw;
         width: 20vw;
@@ -101,6 +92,26 @@ const PubliContainer = styled.div`
             background-color: #FF5544;
         }
     }
+`
+
+const InputPubli = styled.input`
+    height: 20vw;
+    width: 70vw;
+    border: none;
+    margin-bottom: 2vh;
+    border-radius: 8px;
+    background-color: #111111;
+    color: ghostwhite;
+`
+
+const TitlePubli = styled.input`
+    height: 5vw;
+    width: 70vw;
+    border: none;
+    margin-bottom: 2vh;
+    border-radius: 8px;
+    background-color: #111111;
+    color: ghostwhite;
 `
 
 const ContainerFiltros = styled.div`
@@ -141,6 +152,10 @@ function HomePage () {
 
     const [isPubli, setIsPubli] = useState(false)
     const [publiList, setPubliList] = useState([])
+    const [flagVote, setFlagVote] = useState(false)
+    const [form, onChange] = useForm({title:'', body:''})
+    const history = useHistory()
+
     
     useEffect(() => {
         const headers = {
@@ -159,17 +174,101 @@ function HomePage () {
             alert("Ocorreu um erro!")
             console.log(err.response)
         })
-    }, [])
+    }, [flagVote])
 
     const startPubli = () => {
         setIsPubli(!isPubli)
     }
 
+    const createVote = (id, userVote, like) =>{
+        const headers = {
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: window.localStorage.getItem('token')
+            }
+        }
+
+        let body = {}
+
+        if (like === true){
+            body = {
+                direction: 1
+            }
+        } else {
+            body = {
+                direction: -1
+            }
+        }
+
+        if (userVote === null){
+            axios.post(`${BASE_URL}/posts/${id}/votes`, body, headers)
+            .then((res) => {
+                setFlagVote(!flagVote)
+            })
+            .catch((err) =>{
+                alert('Ocorreu um erro!')
+            })
+        } else if (userVote === -body.direction){
+            axios.put(`${BASE_URL}/posts/${id}/votes`, body, headers)
+            .then((res) => {
+                setFlagVote(!flagVote)
+            })
+            .catch((err) =>{
+                alert('Ocorreu um erro!')
+            })
+        }
+    }
+
+    const deletePostVote = (id) => {
+        const headers = {
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: window.localStorage.getItem('token')
+            }
+        }
+
+        axios.delete(`${BASE_URL}/posts/${id}/votes`, headers)
+        .then((res) => {
+            setFlagVote(!flagVote)
+        })
+        .catch((err) => {
+            alert('Ocorreu um erro!')
+        })
+    }
+
+    const createPost = (event) => {
+        event.preventDefault()
+
+        const headers = {
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: window.localStorage.getItem('token')
+            }
+        }
+
+        axios.post(`${BASE_URL}/posts`, form, headers)
+        .then((res) => {
+            alert(res.data)
+            event.target.reset()
+            setFlagVote(!flagVote)
+            setIsPubli(false)
+        })
+        .catch((err) => {
+            alert('Ocorreu um erro!')  
+        })
+
+    }
+
     const renderizaPubli = publiList && publiList.map((publi) => {
         return(
-            <Card publi={publi} post={true}  />
+            <Card publi={publi} post={true} createVote={createVote} deletePostVote={deletePostVote}  />
         )
     })
+
+    const logout = () => {
+        window.localStorage.removeItem("token")
+        history.push('/login')
+    }
 
     return (
         <MainContainerHome>
@@ -185,14 +284,15 @@ function HomePage () {
                     <FiltrosButton>Quer encontrar alguma publicação específica? Experimente nossos filtros!</FiltrosButton>
                 </ContainerFiltros>
                 <ContainerLogout>
-                    <button>Logout</button>
+                    <button onClick={logout} >Logout</button>
                 </ContainerLogout>
             </HeaderHome>
             <MainHome>
                 {isPubli && 
                     (
-                        <PubliContainer>
-                            <input  placeholder='No que você está pensando?' />
+                        <PubliContainer onSubmit={createPost}>
+                            <TitlePubli onChange={onChange} value={form.title} name='title'  placeholder='Escreva um título para sua publicação!' required />
+                            <InputPubli onChange={onChange} value={form.body} name='body' placeholder='No que você está pensando?' required />
                             <button>Publicar</button>
                         </PubliContainer>
                     )}

@@ -1,7 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../context/GlobalContext'
+import {BsFillHandThumbsUpFill, BsFillHandThumbsDownFill} from 'react-icons/bs'
+import axios from 'axios'
+import { BASE_URL } from '../constants/urls'
 
 const MainCard = styled.div`
     min-height: 40vh;
@@ -51,6 +54,7 @@ const ContainerComentario = styled.div`
 function Card (props) {
     const history = useHistory()
     const {selectedPost, setSelectedPost} = useContext(GlobalContext)
+    console.log(props.publi)
 
     const goToPostPage = () => {
         setSelectedPost(props.publi)
@@ -68,9 +72,9 @@ function Card (props) {
             </ContainerPubli>
             <ContainerInfos>
                 <ContainerVote>
-                    <button>Like</button>
+                    {(props.publi.userVote === 1) ? (<BsFillHandThumbsUpFill size={30} color={'#FF4500'} onClick={() => props.deletePostVote(props.publi.id)} />) : (<BsFillHandThumbsUpFill size={30} onClick={() => props.createVote(props.publi.id, props.publi.userVote, true)} />)}
                     {props.publi.voteSum === null ? (0) : (props.publi.voteSum)}
-                    <button>Dislike</button>
+                    {(props.publi.userVote === -1) ? (<BsFillHandThumbsDownFill size={30} color={'#FF4500'} onClick={() => props.deletePostVote(props.publi.id)}  />) : (<BsFillHandThumbsDownFill size={30} onClick={() => props.createVote(props.publi.id, props.publi.userVote, false)}  />)}
                 </ContainerVote>
                 {(props.post) &&
                 (<ContainerComentario>
