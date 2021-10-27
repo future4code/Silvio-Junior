@@ -54,11 +54,12 @@ const ContainerComentario = styled.div`
 function Card (props) {
     const history = useHistory()
     const {selectedPost, setSelectedPost} = useContext(GlobalContext)
-    console.log(props.publi)
 
     const goToPostPage = () => {
-        setSelectedPost(props.publi)
-        history.push(`/post/${props.publi.id}`)
+        if (props.post){
+            setSelectedPost(props.publi)
+            history.push(`/post/${props.publi.id}`)
+        }
     }
 
     return (
