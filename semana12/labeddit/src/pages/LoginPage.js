@@ -26,6 +26,10 @@ const CardLogin = styled.div`
     align-items: center;
     padding: 2vh 2vw;
     margin-top: 12vh;
+
+    @media(max-width:800px){
+        width: 80vw;
+    }
 `
 
 const Logo = styled.img`
@@ -54,6 +58,11 @@ const ContainerInputs = styled.form`
         border-radius: 8px;
         background-color: #111111;
         color: ghostwhite;
+
+        @media(max-width:800px){
+            height: 8vh;
+            width: 60vw;
+        }
     }
 
     button{
@@ -73,6 +82,11 @@ const ContainerInputs = styled.form`
         :active {
             cursor: pointer;
             background-color: #FF5544;
+        }
+
+        @media(max-width:800px){
+            height: 8vh;
+            width: 60vw;
         }
     }
 `
@@ -115,8 +129,8 @@ function LoginPage () {
             history.push('/')
         })
         .catch((err) => {
-            console.log(err.response)
-            alert("Ocorreu um erro.")
+            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+            history.push('/error')
             setLoading(false)
         })
     }

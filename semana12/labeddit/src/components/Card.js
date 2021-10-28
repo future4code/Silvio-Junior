@@ -36,6 +36,8 @@ const ContainerInfos = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+
 `
 
 const ContainerVote = styled.div`
@@ -43,6 +45,9 @@ const ContainerVote = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media(max-width:800px){
+        width: 20vw;
+    }
 `
 
 const ContainerComentario = styled.div`
@@ -50,6 +55,9 @@ const ContainerComentario = styled.div`
     justify-content: space-around;
     align-items: center;
     width: 8vw;
+    @media(max-width:800px){
+        width: 30vw;
+    }
 `
 
 function Card (props) {

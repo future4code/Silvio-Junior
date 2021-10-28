@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
 import PostPage from '../pages/PostPage'
+import ErrorPage from "../pages/ErrorPage";
 
 function RouterPages () {
     return(
@@ -23,6 +24,10 @@ function RouterPages () {
 
                 <Route exact path='/post/:id' >
                     <PostPage />
+                </Route>
+
+                <Route path='*' >
+                    <ErrorPage />
                 </Route>
             </Switch>
         </BrowserRouter>

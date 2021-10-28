@@ -19,6 +19,7 @@ const ContainerComentarios = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 `
 
 const HeaderPost = styled.header`
@@ -40,6 +41,12 @@ const ContainerMarca = styled.div`
     align-items: center;
     margin-left: 2vw;
     margin-top: 4vh;
+
+    @media(max-width: 800px){
+        h2 {
+            display: none;
+        }
+    }
 
 `
 
@@ -67,6 +74,10 @@ const VoltaHomeButton = styled.button`
         cursor: pointer;
         background-color: #FF5544;
     }
+
+    @media(max-width:800px){
+        width: 24vw;
+    }
 `
 
 const FiltrosButton = styled.button`
@@ -80,6 +91,12 @@ const FiltrosButton = styled.button`
 
     :hover{
         cursor: pointer;
+    }
+
+    @media(max-width: 800px){
+        height: 12vh;
+        font-size: 10px;
+        margin-top: 0;
     }
 `
 
@@ -106,6 +123,11 @@ const ContainerLogout = styled.div`
         :active {
             cursor: pointer;
             background-color: #FF5544;
+        }
+
+        @media(max-width:800px){
+            width: 12vw;
+            font-size: 10px;
         }
     }
 `
@@ -135,6 +157,11 @@ const ComentContainer = styled.form`
             cursor: pointer;
             background-color: #FF5544;
         }
+
+        @media(max-width:800px){
+            height: 8vh;
+
+        }
     }
 `
 
@@ -146,6 +173,11 @@ const InputComent = styled.input`
     border-radius: 8px;
     background-color: #111111;
     color: ghostwhite;
+
+    @media(max-width:800px){
+        height: 30vh;
+            
+    }
 `
 
 const ContainerDosFiltros = styled.div`
@@ -154,6 +186,9 @@ const ContainerDosFiltros = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-top: 4vh;
+    @media(max-width:800px){
+        width: 80vw;
+    }
 
     button{
         height: 4vh;
@@ -174,6 +209,10 @@ const ContainerDosFiltros = styled.div`
             cursor: pointer;
             background-color: #FF5544;
         }
+
+        @media(max-width:800px){
+            width: 18vw
+        }
     }
 
     input {
@@ -184,6 +223,11 @@ const ContainerDosFiltros = styled.div`
         border-radius: 8px;
         background-color: #111111;
         color: ghostwhite;
+
+        @media(max-width:800px){
+            height: 8vh;
+            width: 50vw;
+        }
     }
 `
 
@@ -213,6 +257,11 @@ const ButtonComment = styled.div`
             cursor: pointer;
             background-color: #FF5544;
         }
+
+        @media(max-width:800px){
+            width: 20vw;
+            
+        }
     }
 
     input {
@@ -223,6 +272,10 @@ const ButtonComment = styled.div`
         border-radius: 8px;
         background-color: #111111;
         color: ghostwhite;
+    }
+
+    @media(max-width:800px){
+        width: 50vw;
     }
 
 
@@ -253,8 +306,8 @@ function PostPage () {
             setLoading(false)
         })
         .catch((err) => {
-            alert('Ocorreu um erro')
-            console.log(err.response.request.statusText)
+            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+            history.push('/error')
             setLoading(false)
         })
     }, [flagVote])
@@ -294,7 +347,8 @@ function PostPage () {
                 setFlagVote(!flagVote)
             })
             .catch((err) =>{
-                alert('Ocorreu um erro!')
+                alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+                history.push('/error')
             })
         } else if (userVote === -body.direction){
             axios.put(`${BASE_URL}/posts/${id}/votes`, body, headers)
@@ -302,7 +356,8 @@ function PostPage () {
                 setFlagVote(!flagVote)
             })
             .catch((err) =>{
-                alert('Ocorreu um erro!')
+                alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+                history.push('/error')
             })
         }
     }
@@ -320,7 +375,8 @@ function PostPage () {
             setFlagVote(!flagVote)
         })
         .catch((err) => {
-            alert('Ocorreu um erro!')
+            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+            history.push('/error')
         })
     }
 
@@ -350,7 +406,8 @@ function PostPage () {
                 setFlagVote(!flagVote)
             })
             .catch((err) =>{
-                alert('Ocorreu um erro!')
+                alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+                history.push('/error')
             })
         } else if (userVote === -body.direction){
             axios.put(`${BASE_URL}/comments/${id}/votes`, body, headers)
@@ -358,7 +415,8 @@ function PostPage () {
                 setFlagVote(!flagVote)
             })
             .catch((err) =>{
-                alert('Ocorreu um erro!')
+                alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+                history.push('/error')
             })
         }
     }
@@ -376,7 +434,8 @@ function PostPage () {
             setFlagVote(!flagVote)
         })
         .catch((err) => {
-            alert('Ocorreu um erro!')
+            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+            history.push('/error')
         })
     }
 
@@ -399,7 +458,8 @@ function PostPage () {
             setLoading(false)
         })
         .catch((err) => {
-            alert('Ocorreu um erro1')
+            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+            history.push('/error')
             setLoading(false)
         })
 

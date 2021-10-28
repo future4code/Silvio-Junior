@@ -35,6 +35,11 @@ const ContainerMarca = styled.div`
     margin-left: 2vw;
     margin-top: 4vh;
 
+    @media(max-width: 800px){
+        h2 {
+            display: none;
+        }
+    }
 `
 
 const ContainerPubli = styled.div`
@@ -53,6 +58,12 @@ const PubliButton = styled.button`
     :hover{
         cursor: pointer;
     }
+
+    @media(max-width: 800px){
+        height: 12vh;
+        font-size: 10px;
+        margin-top: 0;
+    }
 `
 
 const FiltrosButton = styled.button`
@@ -66,6 +77,12 @@ const FiltrosButton = styled.button`
 
     :hover{
         cursor: pointer;
+    }
+
+    @media(max-width: 800px){
+        height: 12vh;
+        font-size: 10px;
+        margin-top: 0;
     }
 `
 
@@ -94,6 +111,10 @@ const PubliContainer = styled.form`
             cursor: pointer;
             background-color: #FF5544;
         }
+
+        @media(max-width:800px){
+            height: 6vh;
+        }
     }
 `
 
@@ -105,6 +126,9 @@ const InputPubli = styled.input`
     border-radius: 8px;
     background-color: #111111;
     color: ghostwhite;
+    @media(max-width:800px){
+        height: 20vh;
+    }
 `
 
 const TitlePubli = styled.input`
@@ -115,6 +139,10 @@ const TitlePubli = styled.input`
     border-radius: 8px;
     background-color: #111111;
     color: ghostwhite;
+
+    @media(max-width:800px){
+        height: 6vh;
+    }
 `
 
 const ContainerFiltros = styled.div`
@@ -141,6 +169,11 @@ const ContainerLogout = styled.div`
             cursor: pointer;
             background-color: #FF5544;
         }
+
+        @media(max-width:800px){
+            width: 12vw;
+            font-size: 10px;
+        }
     }
 `
 
@@ -153,6 +186,11 @@ const MainHome = styled.div`
 
 const SelecionaFiltros = styled.div`
     display: flex;
+    @media(max-width:800px){
+        width: 50vw;
+        justify-content: space-between;
+        align-items: center;
+    }
 
     select {
         height: 4vh;
@@ -165,6 +203,10 @@ const SelecionaFiltros = styled.div`
         margin-left: 1vw;
         margin-top: 3vh;
 
+        @media(max-width:800px){
+            width: 24vw;
+        }
+
     }
 `
 
@@ -173,6 +215,9 @@ const ContainerDosFiltros = styled.div`
     width: 26vw;
     justify-content: space-between;
     align-items: center;
+    @media(max-width:800px){
+        width: 80vw;
+    }
 
     button{
         height: 4vh;
@@ -194,6 +239,10 @@ const ContainerDosFiltros = styled.div`
             cursor: pointer;
             background-color: #FF5544;
         }
+
+        @media(max-width:800px){
+            width: 18vw
+        }
     }
 
     input {
@@ -204,6 +253,11 @@ const ContainerDosFiltros = styled.div`
         border-radius: 8px;
         background-color: #111111;
         color: ghostwhite;
+
+        @media(max-width:800px){
+            height: 8vh;
+            width: 50vw;
+        }
     }
 `
 
@@ -218,6 +272,11 @@ const BottomButton = styled.button`
 
     :hover{
         cursor: pointer;
+    }
+
+    @media(max-width:800px){
+        height: 10vh;
+        width: 40vw;
     }
 `
 function HomePage () {
@@ -252,8 +311,7 @@ function HomePage () {
             setLoading(false)
         })
         .catch((err) => {
-            alert("Ocorreu um erro!")
-            console.log(err.response)
+            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
             setLoading(false)
         })
     }, [flagVote])
@@ -289,7 +347,8 @@ function HomePage () {
                 setFlagVote(!flagVote)
             })
             .catch((err) =>{
-                alert('Ocorreu um erro!')
+                alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+                history.push('/error')
             })
         } else if (userVote === -body.direction){
             axios.put(`${BASE_URL}/posts/${id}/votes`, body, headers)
@@ -297,7 +356,8 @@ function HomePage () {
                 setFlagVote(!flagVote)
             })
             .catch((err) =>{
-                alert('Ocorreu um erro!')
+                alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+                history.push('/error')
             })
         }
     }
@@ -315,7 +375,8 @@ function HomePage () {
             setFlagVote(!flagVote)
         })
         .catch((err) => {
-            alert('Ocorreu um erro!')
+            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+            history.push('/error')
         })
     }
 
@@ -340,7 +401,8 @@ function HomePage () {
             setLoading(false)
         })
         .catch((err) => {
-            alert('Ocorreu um erro!')  
+            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+            history.push('/error')
             setLoading(false)
         })
 
@@ -383,8 +445,8 @@ function HomePage () {
             setLoading(false)
         })
         .catch((err) => {
-            alert("Ocorreu um erro!")
-            console.log(err.response)
+            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+            history.push('/error')
             setLoading(false)
         })
 
@@ -439,8 +501,8 @@ function HomePage () {
             setPagPubli(pagPubli + 1)
         })
         .catch((err) => {
-            alert("Ocorreu um erro!")
-            console.log(err.response)
+            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+            history.push('/error')
         })
 
 
