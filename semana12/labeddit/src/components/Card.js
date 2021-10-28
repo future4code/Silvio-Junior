@@ -12,6 +12,7 @@ const MainCard = styled.div`
     background-color: black;
     margin-top: 4vh;
     padding: 2vw 2vh;
+    border-radius: 12px;
 
     :hover{
         cursor: pointer;

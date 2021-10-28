@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useProtectedPage } from "../hooks/useProtectedPage";
 import styled from 'styled-components'
 import logo from '../img/logo.png'
@@ -7,6 +7,8 @@ import { BASE_URL } from "../constants/urls";
 import Card from "../components/Card";
 import { useForm } from "../hooks/useForm";
 import { useHistory } from "react-router-dom";
+import { GlobalContext } from "../context/GlobalContext";
+import Loading from "../components/Loading";
 
 const MainContainerHome = styled.div`
     min-height: 100vh;
@@ -230,6 +232,9 @@ function HomePage () {
     const [formFilters, onChangeFormFilters] = useForm({title: '', body: ''})
     const [filtersOn, setFiltersOn] = useState(false)
     const [pagPubli, setPagPubli] = useState(2)
+    const [publisFilter, setPublisFilter] = useState([])
+    const {loading, setLoading} = useContext(GlobalContext)
+
 
     
     useEffect(() => {
@@ -240,13 +245,16 @@ function HomePage () {
             }
         }
 
+        setLoading(true)
         axios.get(`${BASE_URL}/posts?page=1&size=10`, headers)
         .then((res) => {
             setPubliList(res.data)
+            setLoading(false)
         })
         .catch((err) => {
             alert("Ocorreu um erro!")
             console.log(err.response)
+            setLoading(false)
         })
     }, [flagVote])
 
@@ -321,6 +329,7 @@ function HomePage () {
             }
         }
 
+        setLoading(true)
         axios.post(`${BASE_URL}/posts`, form, headers)
         .then((res) => {
             alert(res.data)
@@ -328,9 +337,11 @@ function HomePage () {
             form.body = ''
             setFlagVote(!flagVote)
             setIsPubli(false)
+            setLoading(false)
         })
         .catch((err) => {
             alert('Ocorreu um erro!')  
+            setLoading(false)
         })
 
     }
@@ -354,17 +365,44 @@ function HomePage () {
     const filtrarPubli = (event) => {
         event.preventDefault()
 
+        let resultadosPublis = []
+
+        const headers = {
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: window.localStorage.getItem('token')
+            }
+        }
+
+        setLoading(true)
+        axios.get(`${BASE_URL}/posts?page=1&size=1000`, headers)
+        .then((res) => {
+            console.log('res:', res.data)
+            // setPublisFilter(res.data)
+            pegaPublis(res.data)
+            setLoading(false)
+        })
+        .catch((err) => {
+            alert("Ocorreu um erro!")
+            console.log(err.response)
+            setLoading(false)
+        })
+
         setFiltersOn(true)
         setIsFilter(false)
 
-        let elementosFiltrados = []
+    }
 
+    const pegaPublis = (resultadosPublis) => {
+        console.log('chega', resultadosPublis)
+        let elementosFiltrados = []
+        
+        
         if (formFilters.title === 'Titulo'){
             const arrayBusca = formFilters.body.toUpperCase().split(' ')
-            publiList.map((publi) => {
+            resultadosPublis.map((publi) => {
                 let arrayTitulo = publi.title.split(' ')
                 arrayTitulo.filter((palavra) => {
-                    console.log(arrayTitulo)
                     if (arrayBusca.indexOf(palavra.toUpperCase()) !== -1){
                         elementosFiltrados.push(publi)
                     }
@@ -372,10 +410,9 @@ function HomePage () {
             })
         } else {
             const arrayBusca = formFilters.body.toUpperCase().split(' ')
-            publiList.map((publi) => {
+            resultadosPublis.map((publi) => {
                 let arrayTitulo = publi.body.split(' ')
                 arrayTitulo.filter((palavra) => {
-                    console.log(arrayTitulo)
                     if (arrayBusca.indexOf(palavra.toUpperCase()) !== -1){
                         elementosFiltrados.push(publi)
                     }
@@ -426,7 +463,10 @@ function HomePage () {
                     <button onClick={logout} >Logout</button>
                 </ContainerLogout>
             </HeaderHome>
-            <MainHome>
+            {(loading) ? 
+            (<Loading />)
+            :
+            (<MainHome>
                 {isPubli && 
                     (
                         <PubliContainer onSubmit={createPost}>
@@ -460,7 +500,8 @@ function HomePage () {
                     <h5>Verifique seus filtros de busca ou tente novamente.</h5>
                 </div>)}
                 <BottomButton onClick={maisPublis} >Carregar mais pubicações</BottomButton>
-            </MainHome>
+            </MainHome>)
+            }           
         </MainContainerHome>
     )
 }

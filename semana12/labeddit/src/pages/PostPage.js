@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import logo from '../img/logo.png'
 import { useForm } from '../hooks/useForm'
 import { animateScroll } from 'react-scroll'
+import Loading from '../components/Loading'
 
 const MainContainerPost = styled.div`
     min-height: 100vh;
@@ -230,7 +231,7 @@ const ButtonComment = styled.div`
 
 function PostPage () {
     const params = useParams()
-    const {selectedPost} = useContext(GlobalContext)
+    const {selectedPost, loading, setLoading} = useContext(GlobalContext)
     const [comentarios, setComentarios] = useState([])
     const history = useHistory()
     const [flagVote, setFlagVote] = useState(false)
@@ -245,13 +246,16 @@ function PostPage () {
             }
         }
 
+        setLoading(true)
         axios.get(`${BASE_URL}/posts/${params.id}/comments`, headers)
         .then((res) => {
             setComentarios(res.data)
+            setLoading(false)
         })
         .catch((err) => {
             alert('Ocorreu um erro')
             console.log(err.response.request.statusText)
+            setLoading(false)
         })
     }, [flagVote])
 
@@ -386,14 +390,17 @@ function PostPage () {
             }
         }
 
+        setLoading(true)
         axios.post(`${BASE_URL}/posts/${params.id}/comments`, form, headers)
         .then((res) => {
             alert(res.data)
             form.body = ''
             setFlagVote(!flagVote)
+            setLoading(false)
         })
         .catch((err) => {
             alert('Ocorreu um erro1')
+            setLoading(false)
         })
 
 
@@ -467,12 +474,17 @@ function PostPage () {
                     <h4>Algo a dizer?</h4>
                     <button onClick={goToComentar} >Comentar</button>
                 </ButtonComment>
-                {comentarios.length > 0 ?
-                (renderizaComentarios)
+                {(loading) ?
+                (<Loading />)
                 :
                 (<div>
-                    <h2>Ops... Não há nenhum comentário nesta publicação.</h2>
-                    <h5>Seja o primeiro a comentar ou revise seus filtros para visualizar possíveis comentários.</h5>
+                    {comentarios.length > 0 ?
+                    (renderizaComentarios)
+                    :
+                    (<div>
+                        <h2>Ops... Não há nenhum comentário nesta publicação.</h2>
+                        <h5>Seja o primeiro a comentar ou revise seus filtros para visualizar possíveis comentários.</h5>
+                    </div>)}
                 </div>)}
                 <ComentContainer onSubmit={createComment}>
                     <InputComent onChange={onChange} value={form.body} name='body' placeholder='O que você achou disso?' required />

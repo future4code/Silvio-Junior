@@ -1,8 +1,10 @@
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import Loading from "../components/Loading";
 import { BASE_URL } from "../constants/urls";
+import { GlobalContext } from "../context/GlobalContext";
 import { useForm } from "../hooks/useForm";
 import logo from '../img/logo.png'
 
@@ -11,6 +13,7 @@ const MainContainerSignup = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 4vh;
 `
 
 const CardSignup = styled.div`
@@ -87,6 +90,7 @@ const ContainerInputs = styled.form`
 function SignUpPage () {
     const history = useHistory()
     const [form, onChange] = useForm({username:'', email: '', password:''})
+    const {loading, setLoading} = useContext(GlobalContext)
 
     const handleClick = (event) => {
         event.preventDefault()    
@@ -97,14 +101,17 @@ function SignUpPage () {
             }
         }
         
+        setLoading(true)
         axios.post(`${BASE_URL}/users/signup`, form, headers)
         .then((res) => {
             window.localStorage.setItem('token', res.data.token)
+            setLoading(false)
             history.push('/')
         })
         .catch((err) => {
             console.log(err.response)
             alert('Ocorreu um erro!')
+            setLoading(false)
         })
     }
 
@@ -115,13 +122,16 @@ function SignUpPage () {
                     <Logo src={logo} alt='logo reddit' />
                     <h1>Labeddit</h1>
                 </ContainerMarca>
-                <ContainerInputs onSubmit={handleClick}>
+                {(loading) ?
+                (<Loading />)
+                :
+                (<ContainerInputs onSubmit={handleClick}>
                     <input onChange={onChange} value={form.username} name='username' type='text' placeholder='Username' required />
                     <input onChange={onChange} value={form.email} name='email' type='email' placeholder='E-mail' required />
                     <input onChange={onChange} value={form.password} name='password' type='password' placeholder='Senha' minlength="8" maxlength="30" required />
                     <p>Sua senha precisa ter entre 8 e 30 caracterers.</p>
                     <button>Criar Conta</button>
-                </ContainerInputs>
+                </ContainerInputs>)}
             </CardSignup>
         </MainContainerSignup>
     )

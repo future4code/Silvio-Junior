@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from '../img/logo.png'
 import styled from "styled-components";
 import { useForm } from "../hooks/useForm";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../constants/urls";
+import { GlobalContext } from "../context/GlobalContext";
+import Loading from "../components/Loading";
 
 const MainContainerLogin = styled.div`
     min-height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 4vh;
 `
 
 const CardLogin = styled.div`
@@ -93,6 +96,7 @@ const ContainerCadastro = styled.div`
 function LoginPage () {
     const history = useHistory()
     const [form, onChange] = useForm({email: '', password:''})
+    const {loading, setLoading} = useContext(GlobalContext)
 
     const handleClick = (event) => {
         event.preventDefault()
@@ -103,14 +107,17 @@ function LoginPage () {
             }
         }
 
+        setLoading(true)
         axios.post(`${BASE_URL}/users/login`, form, headers)
         .then((res) => {
             window.localStorage.setItem('token', res.data.token)
+            setLoading(false)
             history.push('/')
         })
         .catch((err) => {
             console.log(err.response)
             alert("Ocorreu um erro.")
+            setLoading(false)
         })
     }
 
@@ -124,6 +131,10 @@ function LoginPage () {
                     <Logo src={logo} alt='logo reddit' />
                     <h1>Labeddit</h1>
                 </ContainerMarca>
+                {(loading) ?
+                (<Loading />)
+                :
+                (<div>
                 <ContainerInputs onSubmit={handleClick}>
                     <input onChange={onChange} value={form.email} name='email' type='email' placeholder='E-mail' required />
                     <input onChange={onChange} value={form.password} name='password' type='password' placeholder='Senha' required />
@@ -132,6 +143,7 @@ function LoginPage () {
                 <ContainerCadastro>
                     <h4>Ainda não tem uma conta? <u onClick={goToSignUp} >Cadastre-se.</u></h4>
                 </ContainerCadastro>
+                </div>)}
             </CardLogin>
         </MainContainerLogin>
     )

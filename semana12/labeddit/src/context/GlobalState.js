@@ -4,10 +4,11 @@ import { GlobalContext } from "./GlobalContext";
 
 const GlobalState = (props) => {
     const [selectedPost, setSelectedPost] = useState([])
+    const [loading, setLoading] = useState(false)
     
 
     return(
-        <GlobalContext.Provider value={{selectedPost, setSelectedPost}}>
+        <GlobalContext.Provider value={{selectedPost, setSelectedPost, loading, setLoading}}>
             {props.children}
         </GlobalContext.Provider>
     )
