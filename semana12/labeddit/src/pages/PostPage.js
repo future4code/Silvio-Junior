@@ -173,6 +173,7 @@ const InputComent = styled.input`
     border-radius: 8px;
     background-color: #111111;
     color: ghostwhite;
+    
 
     @media(max-width:800px){
         height: 30vh;

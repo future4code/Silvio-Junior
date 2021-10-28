@@ -10,7 +10,8 @@ const LogoReddit = styled.img`
     margin-top: 8vh;
 
     @media(max-width: 800px){
-        margin-bottom: -31vh;
+        margin-bottom: -23vh;
+        height: 100px;
     }
 `
 
