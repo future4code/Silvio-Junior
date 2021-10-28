@@ -8,6 +8,10 @@ const LogoReddit = styled.img`
     width: auto;
     margin-bottom: -30vh;
     margin-top: 8vh;
+
+    @media(max-width: 800px){
+        margin-bottom: -31vh;
+    }
 `
 
 const Gif = styled.img`

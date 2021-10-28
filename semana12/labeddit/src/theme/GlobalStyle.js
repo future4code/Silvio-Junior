@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     box-sizing: border-box;
-    background-image: radial-gradient(#111111, #000000);
+    background-image: radial-gradient(#222222, #111111);
     color: ghostwhite;
   }
   code {
