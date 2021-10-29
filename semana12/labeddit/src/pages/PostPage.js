@@ -300,17 +300,28 @@ function PostPage () {
             }
         }
 
-        setLoading(true)
-        axios.get(`${BASE_URL}/posts/${params.id}/comments`, headers)
-        .then((res) => {
-            setComentarios(res.data)
-            setLoading(false)
-        })
-        .catch((err) => {
-            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
-            history.push('/error')
-            setLoading(false)
-        })
+        if (comentarios.length === 0){
+            setLoading(true)
+            axios.get(`${BASE_URL}/posts/${params.id}/comments`, headers)
+            .then((res) => {
+                setComentarios(res.data)
+                setLoading(false)
+            })
+            .catch((err) => {
+                alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+                history.push('/error')
+                setLoading(false)
+            })
+        } else {
+            axios.get(`${BASE_URL}/posts/${params.id}/comments`, headers)
+            .then((res) => {
+                setComentarios(res.data)
+            })
+            .catch((err) => {
+                alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+                history.push('/error')
+            })
+        }
     }, [flagVote])
 
     const logout = () => {

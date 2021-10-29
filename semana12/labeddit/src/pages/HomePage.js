@@ -304,16 +304,31 @@ function HomePage () {
             }
         }
 
-        setLoading(true)
-        axios.get(`${BASE_URL}/posts?page=1&size=10`, headers)
-        .then((res) => {
-            setPubliList(res.data)
-            setLoading(false)
-        })
-        .catch((err) => {
-            alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
-            setLoading(false)
-        })
+        if (publiList.length === 0){
+            setLoading(true)
+            axios.get(`${BASE_URL}/posts?page=1&size=10`, headers)
+            .then((res) => {
+                setPubliList(res.data)
+                setLoading(false)
+            })
+            .catch((err) => {
+                setLoading(false)
+                if (window.localStorage.getItem('token')){
+                    alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+                    history.push('/error')
+                }
+            })
+        } else{
+            axios.get(`${BASE_URL}/posts?page=1&size=10`, headers)
+            .then((res) => {
+                setPubliList(res.data)
+            })
+            .catch((err) => {
+                alert("Ocorreu um erro com a requisição! \nVerifique se você está logado e sua conexão com a internet")
+                history.push('/error')
+            })
+        }
+        
     }, [flagVote])
 
     const startPubli = () => {

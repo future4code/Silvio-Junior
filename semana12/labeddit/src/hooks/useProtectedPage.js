@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
+
 
 
 export const useProtectedPage = () => {
@@ -9,7 +10,6 @@ export const useProtectedPage = () => {
       const token = localStorage.getItem("token");
 
       if (token === null) {
-        console.log("Não está logado!!!");
         history.push("/login");
       }
     }, [history]);

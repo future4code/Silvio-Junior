@@ -1,3 +1,39 @@
+<h1 align='center'>Labeddit</h1>
+  
+<h4 align="center"> 
+	🚧  React Select 🚀 Finalizado  🚧
+</h4>
+ 
+### Link para a aplicação
+
+Clique [aqui](https://foolish-noise.surge.sh/) para testar a aplicação.
+
+### Descrição
+
+O **LabEddit** foi desenvolvido como atividade para o curso de desenvolvimento web *full stack* da Labenu. 
+
+O projeto conta com uma página de *login*; que permite à usuários cadastrados a entrada na plataforma; uma página de *signup*; que permite o cadastro de novos usuários; uma *home page*, onde o usuário pode visualizar publicações realizadas por outros participantes da plataforma -- podendo solicitar a visualização de novas publicações --, além de poder filtrar publicações e criar uma nova publicação -- as ações de filtragem e de criação de nova publicação estão disponíveis no *header* da *home page* onde, ao clicar nos botões, aparecem inputs na tela para o usuário realizar as ações; e uma página de *post*, onde é possível ver e interagir com os comentários de uma publicação, alem da possibilidade de filtrar comentários -- a exemplo da *home page* o filtro dos comentários se enconta em um botão no *header* que, quando filtrado, disponibiliza o formulário --, além de criar um novo comentário.
+
+### 🛠 Tecnologias
+
+O projeto *frot-end* foi constrído em **React**, fazendo uso de bibliotecas como o *styled-components*, para a estilização dos componentes, *axios*, para comunicação com a API, *React-Icons* que disponibiliza ícones e *React-router-dom* para a navegção entre páginas. O link para cada tecnologia com as respectivas instruções para instalação é disponibilizado abaixo.
+
+- [React](https://pt-br.reactjs.org/)
+- [Styled-components](https://styled-components.com/)
+- [Axios](https://axios-http.com/docs/intro)
+- [React-icons](https://react-icons.github.io/react-icons/)
+- [React-Router-Dom](https://reactrouter.com/)
+
+### Autor
+
+Silvio Ribeiro Dias Jr.
+
+- [LinkedIn](https://www.linkedin.com/in/silvio-dias-junior/)
+- [Github](https://github.com/silviordjr)
+
+<hr/>
+<hr/>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
