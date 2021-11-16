@@ -1,0 +1,12 @@
+{
+  "name": "nome",
+  "version": "1.0.0",
+  "description": "Imprime nome, idade e idade daqui a 7 anos ",
+  "main": "nomeEIdade.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "clear && echo Imprime nome e idade && node ./nomeEIdade.js"
+  },
+  "author": "Silvio Dias Jr.",
+  "license": "ISC"
+}
