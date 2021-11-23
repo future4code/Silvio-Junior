@@ -131,18 +131,71 @@ SELECT SUM(salary) FROM Actor;
 <h5>a)</h5> 
 
 <p>
-
+O retorno informa os generos presentes na tabela e a quantidade de ocorrência de cada gênero.
 </p>
 
 <h5>b)</h5>
 
 <p>
-
+SELECT id, name
+FROM Actor
+ORDER BY name DESC;
 </p>
 
 <h5>c)</h5>
 
 <p>
+SELECT *
+FROM Actor
+ORDER BY salary;
+</p>
+
+
+<h5>d)</h5>
+
+<p>
+SELECT *
+FROM Actor
+ORDER BY salary DESC
+LIMIT 3;
+</p>
+
+<h5>e)</h5>
+
+<p>
+SELECT AVG(salary), gender
+From Actor
+GROUP BY gender;
+</p>
+
+
+
+
+
+<h3>Exercício 6</h3>
+
+<h5>a)</h5> 
+
+<p>
+ALTER TABLE Filmes ADD COLUMN playing_limit_date DATE;
+</p>
+
+<h5>b)</h5>
+
+<p>
+ALTER TABLE Filmes CHANGE avaliacao avaliacao FLOAT NOT NULL;
+</p>
+
+<h5>c)</h5>
+
+<p>
+UPDATE Filmes 
+SET playing_limit_date = "2021-02-16"
+WHERE id = "001";
+
+UPDATE Filmes 
+SET playing_limit_date = "2022-02-16"
+WHERE id = "002";
 
 </p>
 
@@ -150,14 +203,104 @@ SELECT SUM(salary) FROM Actor;
 <h5>d)</h5>
 
 <p>
+DELETE FROM Filmes WHERE id = "003";
 
+UPDATE Filmes 
+SET playing_limit_date = "2023-02-16"
+WHERE id = "003";
+
+Não resultou em erro, porém nada foi alterado pois a linha com id="003" não foi encontrada.
+</p>
+
+
+
+
+
+<h3>Exercício 7</h3>
+
+<h5>a)</h5> 
+
+<p>
+SELECT COUNT(*) FROM Filmes WHERE avaliacao > 7.5;
+
+1 filme.
+</p>
+
+<h5>b)</h5>
+
+<p>
+SELECT AVG(avaliacao) FROM Filmes;
+
+8,5.
+</p>
+
+<h5>c)</h5>
+
+<p>
+SELECT COUNT(*) FROM Filmes;
+
+2 filmes.
+</p>
+
+
+<h5>d)</h5>
+
+<p>
+SELECT COUNT(*) FROM Filmes WHERE data_lancamento > CURDATE();
+
+0 filme.
 </p>
 
 <h5>e)</h5>
 
 <p>
+SELECT MAX(avaliacao) FROM Filmes;
 
+10
 </p>
+
+<h5>f)</h5>
+
+<p>
+SELECT MIN(avaliacao) FROM Filmes;
+
+7
+</p>
+
+
+
+
+
+
+
+<h3>Exercício 8</h3>
+
+<h5>a)</h5> 
+
+<p>
+SELECT * FROM Filmes ORDER BY name ASC;
+</p>
+
+<h5>b)</h5>
+
+<p>
+SELECT * FROM Filmes ORDER BY name DESC LIMIT 5;
+</p>
+
+<h5>c)</h5>
+
+<p>
+SELECT * FROM Filmes WHERE playing_limit_date < CURDATE() ORDER BY data_lancamento DESC LIMIT 3;
+</p>
+
+
+<h5>d)</h5>
+
+<p>
+SELECT * FROM Filmes ORDER BY avaliacao DESC LIMIT 3;
+</p>
+
+
 
 
 
