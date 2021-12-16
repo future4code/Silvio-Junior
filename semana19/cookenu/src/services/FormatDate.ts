@@ -6,4 +6,9 @@ export default class FormatDate {
     
         return date
     }
+
+    format(date: Date): string {
+        let currentData = ((date.getDate() )) + "/" + ((date.getMonth() + 1)) + "/" + date.getFullYear(); 
+        return currentData
+    }
 }

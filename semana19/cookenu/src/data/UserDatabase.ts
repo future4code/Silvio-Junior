@@ -36,4 +36,21 @@ export default class UserDatabase{
 
         return usersReturn
     }
+
+    async follow (followingId: string, followedId: string) {
+        await connection ('cookenu_follows')
+            .insert({
+                user_following_id: followingId,
+                user_followed_id: followedId
+            })
+    }
+
+    async unfollow (followingId: string, followedId: string) {
+        await connection ('cookenu_follows')
+            .where({
+                'user_following_id': followingId,
+                'user_followed_id': followedId
+            })
+            .del()
+    }
 } 
