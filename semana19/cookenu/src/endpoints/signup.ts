@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import UserDatabase from "../data/UserDatabase";
+import { Authenticator } from "../services/Authenticator";
 import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/idGenerator";
 import { ROLE } from "../types/role";
 import User from "../types/User";
+
 
 export default async function SignUp (req: Request, res: Response): Promise<void> {
     try {
@@ -23,8 +25,9 @@ export default async function SignUp (req: Request, res: Response): Promise<void
 
         const userDB = new UserDatabase()
         const verifyUsers = await userDB.searchUsers(email)
+        console.log(verifyUsers)
 
-        if (verifyUsers.length > 0){
+        if (verifyUsers){
             throw new Error ('Email ja cadastrad0.')
         }
 
@@ -42,7 +45,12 @@ export default async function SignUp (req: Request, res: Response): Promise<void
 
         await userDB.create(newUser)
 
-        res.status(201).send('Usuário cadastrado com sucesso!')
+        const token = new Authenticator().generateToken({id, role: userRole})
+
+        res.status(201).send({
+            message: 'Usuário cadastrado com sucesso!',
+            token: token
+        })
 
     } catch (error: any) {
         res.send(error.sqlMessage || error.message)
