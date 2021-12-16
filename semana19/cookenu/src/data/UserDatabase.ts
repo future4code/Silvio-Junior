@@ -48,9 +48,22 @@ export default class UserDatabase{
     async unfollow (followingId: string, followedId: string) {
         await connection ('cookenu_follows')
             .where({
-                'user_following_id': followingId,
-                'user_followed_id': followedId
+                user_following_id: followingId,
+                user_followed_id: followedId
             })
             .del()
+    }
+
+    async getFollows (userId: string): Promise <string [] > {
+        const follows = await connection ('cookenu_follows')
+            .select("user_followed_id")
+            .where({
+                user_following_id: userId
+            })
+        const userFollows = follows.map((follow) => {
+            return follow.user_followed_id
+        })
+        
+        return userFollows
     }
 } 

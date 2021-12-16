@@ -31,8 +31,14 @@ export default class RecipesDatabase {
     async getByUser (userId: string): Promise <Recipes []> {
         const recipes = await connection ('cookenu_recipes')
             .where({user_id: userId})
+            .select("*")
         
-        return recipes
+        const feedRecipes = recipes.map((rec) => {
+            const recipe = new Recipes(rec.id, rec.title, rec.description, rec.date, rec.user_id)
+            return recipe
+        })
+        
+        return feedRecipes
     }
 
 }
