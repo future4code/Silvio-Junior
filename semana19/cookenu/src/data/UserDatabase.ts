@@ -66,4 +66,12 @@ export default class UserDatabase{
         
         return userFollows
     }
+
+    async getName(id: string): Promise <string>{
+        const name = await connection ('cookenu_users')
+            .where({id: id})
+            .select('name')
+        
+        return name[0].name
+    }
 } 

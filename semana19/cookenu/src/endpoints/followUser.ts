@@ -23,6 +23,21 @@ export default async function FollowUser (req: Request, res: Response): Promise 
         }
 
         const userDB = new UserDatabase()
+
+        const follows = await userDB.getFollows(tokenData.id)
+
+        let isFollow: boolean = false
+
+        for (let f of follows){
+            if (followedId === f){
+                isFollow = true
+            }
+        }
+
+        if (isFollow){
+            throw new Error ('Este usuário ja é seguido!')
+        }
+        
         await userDB.follow(tokenData.id, followedId)
 
         res.status(200).send('Usuário seguido com sucesso!')

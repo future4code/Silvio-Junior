@@ -31,14 +31,36 @@ export default class RecipesDatabase {
     async getByUser (userId: string): Promise <Recipes []> {
         const recipes = await connection ('cookenu_recipes')
             .where({user_id: userId})
-            .select("*")
-        
+            .select("*") 
+
         const feedRecipes = recipes.map((rec) => {
-            const recipe = new Recipes(rec.id, rec.title, rec.description, rec.date, rec.user_id)
+            const dateFormat = new FormatDate().format(rec.date)
+            const recipe = new Recipes(rec.id, rec.title, rec.description, dateFormat, rec.user_id)
             return recipe
         })
         
         return feedRecipes
+    }
+
+    async getFeed(id: string, page: number): Promise<Recipes []>{
+        const recipes = await connection ('cookenu_follows')
+            .where({
+                user_following_id: id
+            })
+            .join('cookenu_recipes', 'cookenu_recipes.user_id', '=', 'cookenu_follows.user_followed_id')
+            .select('cookenu_recipes.id as id', 'cookenu_recipes.title as title', 'cookenu_recipes.description as description', 'cookenu_recipes.date as date', 'cookenu_recipes.user_id as userId')
+            .orderBy('cookenu_recipes.date', 'DESC')
+            .limit(15)
+            .offset(page * 15)
+        
+        const feedRecipes = recipes.map((rec) => {
+            const dateFormat = new FormatDate().format(rec.date)
+            const recipe = new Recipes(rec.id, rec.title, rec.description, dateFormat, rec.userId)
+            return recipe
+        })
+            
+        return feedRecipes
+
     }
 
 }
