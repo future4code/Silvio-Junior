@@ -3,11 +3,39 @@ export enum POST_TYPES{
     EVENT = "EVENT"
   }
   
-  export interface post {
-    userId: string
-    id: string
-    photo: string
-    description: string
-    creationDate: Date
-    type: POST_TYPES
+  
+
+  export class Post {
+    constructor(
+      protected id: string,
+      protected photo: string,
+      protected desciption: string,
+      protected date: string,
+      protected type: POST_TYPES,
+      protected userId: string
+    ){}
+
+    getId () {
+      return this.id
+    }
+
+    getPhoto () {
+      return this.photo
+    }
+
+    getDescription () {
+      return this.desciption
+    }
+
+    getDate () {
+      return this.date
+    }
+
+    getType () {
+      return this.type
+    }
+
+    getUserId () {
+      return this.userId
+    }
   }
