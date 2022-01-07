@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev ./src/index.ts",
     "start": "node ./build/index.js",
-    "build": "tsc"
+    "build": "tsc",
+    "migrations": "tsnd ./src/data/migrations.ts",
+    "debug": "npx tsc && node --inspect ./build/index.js"
   },
   "keywords": [],
   "author": "",
