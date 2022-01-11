@@ -19,5 +19,7 @@ describe ('performAttack test', () => {
             strength: 5000
         }
         expect(performAttack(attacker, defender, sucessMock).health).toBe(9800)
+        expect(sucessMock).toBeCalledTimes(2)
+        expect(sucessMock).toReturnTimes(2)
     })
 })
