@@ -1,10 +1,13 @@
-import CompetitionDatabase from "../data/CompetitonDatabase"
 import { Competition, STATUS, WINS } from "../model/Competition"
 import { Ranking } from "../model/Ranking"
 import IdGenerator from "../services/IdGenerator"
 
 export default class CompetitionBusiness{
-    async create (name: string, unit: string, wins: string): Promise <void> {
+    async create (
+        name: string, 
+        unit: string, 
+        wins: string,
+        populateCompetition: (competition: Competition) => Promise <void>): Promise <void> {
         if (!name || !unit || !wins){
             throw new Error ('Preencha os campos necessários (name, unit e wins).')
         }
@@ -24,15 +27,20 @@ export default class CompetitionBusiness{
 
         const newCompetition = new Competition(id, name, status, unit, competitionWins)
 
-        await new CompetitionDatabase().create(newCompetition)
+        await populateCompetition(newCompetition)
     }
 
-    async createResult (athelteId: string, competitionId: string, result: string): Promise<void> {
+    async createResult (
+        athelteId: string, 
+        competitionId: string, 
+        result: string,
+        populateResult: (athelteId: string, competitionId: string, result: string, id: string) => Promise <void>,
+        getCompetition: (competitionId: string) => Promise <Competition | undefined>): Promise<void> {
         if (!athelteId || !competitionId || !result){
             throw new Error ('Preencha todos os campos obrigatórios (athleteId, competitionId e result).')
         }
 
-        const competition = await new CompetitionDatabase().getCompetition(competitionId)
+        const competition = await getCompetition(competitionId)
 
         if (!competition){
             throw new Error ('Competição inexistente.')
@@ -44,23 +52,28 @@ export default class CompetitionBusiness{
 
         const id = new IdGenerator().generateId()
 
-        await new CompetitionDatabase().createResult(athelteId, competitionId, result, id)
+        await populateResult(athelteId, competitionId, result, id)
     }
 
-    async finishCompetition (competitionId: string): Promise<void> {
+    async finishCompetition (
+        competitionId: string,
+        endCompetition: (competitionId: string) => Promise <void>): Promise<void> {
         if (!competitionId){
             throw new Error ('Informe o campo obrigatório (competitionId).')
         }
 
-        await new CompetitionDatabase().finishCompetition(competitionId)
+        await endCompetition(competitionId)
     }
 
-    async getRanking (competitionId: string): Promise < Ranking [] > {
+    async getRanking (
+        competitionId: string,
+        getCompetition: (competitionId: string) => Promise <Competition | undefined>,
+        getResults: (competitionId: string, order: string) => Promise < Ranking [] >): Promise < Ranking [] > {
         if (!competitionId){
             throw new Error ('Informe a ID da competiçao.')
         }
 
-        const competition = await new CompetitionDatabase().getCompetition(competitionId)
+        const competition = await getCompetition(competitionId)
         let order: string
 
         if (!competition){
@@ -76,7 +89,7 @@ export default class CompetitionBusiness{
         }
 
 
-        const ranking = await new CompetitionDatabase().getRanking(competitionId, order)
+        const ranking = await getResults(competitionId, order)
 
         const rankingIds: string [] = []
         const filterRanking = ranking.filter((result) => {

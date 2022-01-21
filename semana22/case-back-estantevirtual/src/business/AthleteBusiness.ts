@@ -1,9 +1,10 @@
-import AthelteDatabase from "../data/AthleteDatabse"
 import { Athlete } from "../model/Athlete"
 import IdGenerator from "../services/IdGenerator"
 
 export default class AthleteBusiness {
-    async create (name: string): Promise <void> {
+    async create (
+        name: string,
+        populateAthlete: (athlete: Athlete) => Promise <void> ): Promise <void> {
         if (!name){
             throw new Error ('Preencha o campo obrigatório (name).')
         }
@@ -12,6 +13,6 @@ export default class AthleteBusiness {
 
         const newAthlete = new Athlete(id, name)
 
-        await new AthelteDatabase().create(newAthlete)
+        await populateAthlete(newAthlete)
     }
 }

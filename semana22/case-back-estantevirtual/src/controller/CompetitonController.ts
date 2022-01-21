@@ -6,8 +6,10 @@ export default class CompetitionController {
     async create (req: Request, res: Response): Promise <void> {
         try {
             const {name, unit, wins} = req.body
+
+            const populateCompetition = new CompetitionDatabase().create
             
-            await new CompetitionBusiness().create(name, unit, wins)
+            await new CompetitionBusiness().create(name, unit, wins, populateCompetition)
 
             res.status(200).send({message: 'Competição criada.'})
         } catch (error: any) {
@@ -17,9 +19,12 @@ export default class CompetitionController {
 
     async createResult (req: Request, res: Response): Promise<void> {
         try {
-            const {athelteId, competitionId, result, unit} = req.body
+            const {athleteId, competitionId, result} = req.body
+
+            const populateResult = new CompetitionDatabase().createResult
+            const getCompetition = new CompetitionDatabase().getCompetition
             
-            await new CompetitionBusiness().createResult(athelteId, competitionId, result)
+            await new CompetitionBusiness().createResult(athleteId, competitionId, result, populateResult, getCompetition)
 
             res.status(200).send({message: 'Resultados cadastrados.'})
         } catch (error: any) {
@@ -30,8 +35,10 @@ export default class CompetitionController {
     async finishCompetition (req: Request, res: Response): Promise <void> {
         try {
             const {competitionId} = req.body
+
+            const endCompetition = new CompetitionDatabase().finishCompetition
             
-            await new CompetitionBusiness().finishCompetition(competitionId)
+            await new CompetitionBusiness().finishCompetition(competitionId, endCompetition)
 
             res.status(200).send({message: 'Competição encerrada.'})
         } catch (error: any) {
@@ -43,7 +50,10 @@ export default class CompetitionController {
         try {
             const competitionId = req.params.id
 
-            const ranking = await new CompetitionBusiness().getRanking(competitionId)
+            const getCompetition = new CompetitionDatabase().getCompetition
+            const getResults = new CompetitionDatabase().getRanking
+
+            const ranking = await new CompetitionBusiness().getRanking(competitionId, getCompetition, getResults)
             const competition = await new CompetitionDatabase().getCompetition(competitionId)
 
             res.status(200).send({status: competition?.getStatus(), ranking: ranking})
