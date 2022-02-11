@@ -1,0 +1,80 @@
+{
+  "requests": [
+    {
+      "id": "1638469951228",
+      "cnpj": "68217662000151",
+      "solicitado": "115000",
+      "faturamento": "20000",
+      "nome": "Silvio Ribeiro Dias Junior",
+      "cpf": "67145630001",
+      "telefone": "82982285171",
+      "email": "silviordjr@outlook.com",
+      "endereco": {
+        "cep": "57035556",
+        "cidade": "Maceió",
+        "uf": "AL",
+        "rua": "Avenida Desembargador Valente de Lima - de 91/92 ao fim",
+        "bairro": "Jatiúca",
+        "numero": "200",
+        "complemento": "Ap 101"
+      }
+    },
+    {
+      "id": "1638470247350",
+      "cnpj": "15318758000140",
+      "solicitado": "25000",
+      "faturamento": "5000",
+      "nome": "José Claudio dos Santos",
+      "cpf": "45719149031",
+      "telefone": "6533214532",
+      "email": "josecsantos@gmail",
+      "endereco": {
+        "cep": "07176600",
+        "cidade": "Guarulhos",
+        "uf": "SP",
+        "rua": "Rua Maria Jorge Lombardi",
+        "bairro": "Jardim Álamo",
+        "numero": "43",
+        "complemento": ""
+      }
+    },
+    {
+      "id": "1638470375063",
+      "cnpj": "08815181000116",
+      "solicitado": "2000000",
+      "faturamento": "123500",
+      "nome": "Beatriz Seixas",
+      "cpf": "84697562062",
+      "telefone": "11987765434",
+      "email": "beatriz@hotmail.com",
+      "endereco": {
+        "cep": "07176635",
+        "cidade": "Guarulhos",
+        "uf": "SP",
+        "rua": "Rua João Garcia e Garcia",
+        "bairro": "Jardim Álamo",
+        "numero": "432",
+        "complemento": "sala 23"
+      }
+    },
+    {
+      "cnpj": "07014697000107",
+      "solicitado": "135000.50",
+      "faturamento": "29500.05",
+      "nome": "José Carlos dos Santos Huerta",
+      "cpf": "24612908066",
+      "telefone": "82986657432",
+      "email": "josecsh@gmail.com",
+      "endereco": {
+        "cep": "57010002",
+        "cidade": "Maceió",
+        "uf": "AL",
+        "rua": "Avenida Siqueira Campos - até 944 - lado par",
+        "bairro": "Prado",
+        "numero": "96",
+        "complemento": "96"
+      },
+      "id": "1638535227560"
+    }
+  ]
+}
